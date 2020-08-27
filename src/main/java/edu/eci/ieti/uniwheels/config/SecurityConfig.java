@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().disable()
                 .formLogin().loginPage("/webapp/Inicio/inicio.html").loginProcessingUrl("/login")
-                .defaultSuccessUrl("/webapp/Menu/menu.html")
+                .defaultSuccessUrl("/auth/isLogged")
                 .permitAll();
 
         http
