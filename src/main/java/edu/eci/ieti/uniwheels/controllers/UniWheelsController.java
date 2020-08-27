@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/probando")
+@RequestMapping("/uniwheels")
 public class UniWheelsController {
     @Autowired
     UniwheelsServices uniwheelsServices = null;
