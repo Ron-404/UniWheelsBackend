@@ -125,4 +125,21 @@ public class Usuario {
     public void setUniversidad(String universidad) {
         this.universidad = universidad;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "userId='" + userId + '\'' +
+                ", username='" + username + '\'' +
+                ", nombreCompleto='" + nombreCompleto + '\'' +
+                ", direccionResidencia='" + direccionResidencia + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", universidad='" + universidad + '\'' +
+                ", numero='" + numero + '\'' +
+                ", carros=" + carros +
+                ", viajesConductor=" + viajesConductor +
+                ", viajesPasajero=" + viajesPasajero +
+                '}';
+    }
 }

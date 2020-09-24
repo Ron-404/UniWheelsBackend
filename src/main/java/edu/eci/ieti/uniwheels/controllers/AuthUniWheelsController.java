@@ -24,6 +24,8 @@ public class AuthUniWheelsController {
 
     @RequestMapping(value = "/añadirUsuario",method = RequestMethod.POST)
     public ResponseEntity<?> addUser(@RequestBody Usuario usuario){
+
+        System.out.println(usuario.toString());
         authServices.addUser(usuario);
         return new ResponseEntity<>(HttpStatus.OK);
     }
