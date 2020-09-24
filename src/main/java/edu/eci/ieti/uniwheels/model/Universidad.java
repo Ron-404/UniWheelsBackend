@@ -1,6 +1,12 @@
 package edu.eci.ieti.uniwheels.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "university")
 public class Universidad {
+    @Id
+    private String id;
     private String nombre;
 
     public Universidad(String nombre) {

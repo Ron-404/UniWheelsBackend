@@ -18,7 +18,6 @@ import javax.activation.DataSource;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
@@ -47,8 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .cors().disable()
-                .formLogin().loginPage("/webapp/Inicio/inicio.html").loginProcessingUrl("/login")
-                .defaultSuccessUrl("/auth/isLogged")
+                .formLogin().loginProcessingUrl("/login")
+                .defaultSuccessUrl("/auth/loggedUser")
                 .permitAll();
 
         http
