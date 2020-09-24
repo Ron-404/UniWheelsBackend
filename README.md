@@ -10,3 +10,31 @@ Para ingresar al link de despliegue en heroku dar click [aqui](https://uniwheels
 ## Class Model
 
 ![Class Model](images/DiagramaDeClases.png)
+
+## API's
+
+### Authentication
+1. /auth/addUser (Register)
+```
+{
+    "username": "orlandoagk",
+    "nombreCompleto":"Orlando Antonio Gelves Kerguelen",
+    "direccionResidencia":"Calle 87",
+    "password":"prueba",
+    "email":"orlando@hotmail.com",
+    "universidad":"ECI",
+    "numero":"3267895438",
+    "carros":[],
+    "viajesConductor":[],
+    "viajesPasajero":[]
+}
+```
+2. /login (Login)
+```
+{
+    "username":"orlandoagk",
+    "password":"prueba"
+}
+```
+
+### Uniwheels Api's

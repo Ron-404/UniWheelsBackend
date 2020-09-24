@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ImplPersistencia {
-    private Usuario USER = new Usuario();
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -24,8 +25,22 @@ public class ImplPersistencia {
         userRepository.save(usuario);
     }
 
-    public Usuario getUser(){
-        return USER;
+    public Usuario getUserByUsername(String username) throws UniWheelsException {
+        List<Usuario> allUsers = userRepository.findAll();
+        System.out.println(username);
+        Usuario usuario = null;
+        for(int i =0;i<allUsers.size();i++){
+            System.out.println(allUsers.get(i).toString());
+            if(allUsers.get(i).username.equals(username)){
+                System.out.println("Entre acá");
+                usuario = allUsers.get(i);
+            }
+        }
+        if(usuario == null){
+            throw new UniWheelsException(UniWheelsException.USERNAME_NOT_FOUND);
+        }
+
+        return usuario;
     }
 
 }
