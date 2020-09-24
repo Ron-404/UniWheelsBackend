@@ -6,3 +6,7 @@ Para ingresar al link de despliegue en heroku dar click [aqui](https://uniwheels
 
 1. `git clone https://github.com/Ron-404/UniWheelsBackend.git`
 2. `gradle spring-boot:run`  
+
+## Class Model
+
+![Class Model](images/DiagramaDeClases.png)

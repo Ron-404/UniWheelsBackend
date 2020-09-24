@@ -1,23 +1,73 @@
 package edu.eci.ieti.uniwheels.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
+
+@Document(collection = "user")
 public class Usuario {
-    public int userId;
+    @Id
+    public String userId;
     public String username;
+    public String nombreCompleto;
     public String direccionResidencia;
     public String password;
     public String email;
     public String universidad;
     public String numero;
+    public List<Carro> carros;
+    public List<Conductor> viajesConductor;
+    public List<Pasajero> viajesPasajero;
 
     public Usuario(){}
 
-    public Usuario(String username,String password,String email, String universidad, String direccionResidencia, String numero){
+    public Usuario(String username,String nombreCompleto,String password,String email,
+                   String universidad, String direccionResidencia, String numero, List<Carro> carros,
+                   List<Conductor> viajesConductor, List<Pasajero> viajesPasajero){
         this.username = username;
+        this.nombreCompleto = nombreCompleto;
         this.password = password;
         this.email = email;
         this.universidad = universidad;
         this.direccionResidencia = direccionResidencia;
         this.numero = numero;
+        this.carros = carros;
+        this.viajesConductor = viajesConductor;
+        this.viajesPasajero = viajesPasajero;
+    }
+
+    public List<Conductor> getViajesConductor() {
+        return viajesConductor;
+    }
+
+    public void setViajesConductor(List<Conductor> viajesConductor) {
+        this.viajesConductor = viajesConductor;
+    }
+
+    public List<Pasajero> getViajesPasajero() {
+        return viajesPasajero;
+    }
+
+    public void setViajesPasajero(List<Pasajero> viajesPasajero) {
+        this.viajesPasajero = viajesPasajero;
+    }
+
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
+
+    public List<Carro> getCarros() {
+        return carros;
+    }
+
+    public void setCarros(List<Carro> carros) {
+        this.carros = carros;
     }
 
     public String getNumero() {
@@ -28,11 +78,11 @@ public class Usuario {
         this.numero = numero;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

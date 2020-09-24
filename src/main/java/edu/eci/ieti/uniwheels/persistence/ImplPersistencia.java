@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ImplPersistencia {
-    private Usuario USER = new Usuario("Nigi","hola","nigi@hotmail.com", "ECI", "Calle 177 #28-39", "320948534");
+    private Usuario USER = new Usuario();
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
