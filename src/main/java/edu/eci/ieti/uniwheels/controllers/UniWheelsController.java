@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,12 +56,21 @@ public class UniWheelsController extends BaseController{
         }
     }
 
-
+    @RequestMapping(value="/updateCarro/{carro}",method = RequestMethod.PUT)
+    public ResponseEntity<?> updateCarro(@PathVariable  Carro carro){
+        try{
+            uniwheelsServices.updateCarro(carro);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            Logger.getLogger(UniWheelsController.class.getName()).log(Level.SEVERE, null, e);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
 
     @RequestMapping(value ="/getUniversidades",method = RequestMethod.GET)
     public ResponseEntity<?> getUniversidades(){
         try{
-            Collection<Universidad> universidadCollection = uniwheelsServices.getUniversidades();
+            List<Universidad> universidadCollection = uniwheelsServices.getUniversidades();
             return new ResponseEntity<>(universidadCollection,HttpStatus.ACCEPTED);
 
         } catch (Exception e){
