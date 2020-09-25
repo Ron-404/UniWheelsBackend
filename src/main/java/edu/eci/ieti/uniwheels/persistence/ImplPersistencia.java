@@ -1,15 +1,18 @@
 package edu.eci.ieti.uniwheels.persistence;
 
+import edu.eci.ieti.uniwheels.model.Carro;
+import edu.eci.ieti.uniwheels.model.Universidad;
 import edu.eci.ieti.uniwheels.model.Usuario;
 import edu.eci.ieti.uniwheels.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 @Service
-public class ImplPersistencia {
+public class ImplPersistencia implements UniwheelsPersistence {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -43,4 +46,28 @@ public class ImplPersistencia {
         return usuario;
     }
 
+    @Override
+    public Collection<Carro> getCarros(String username) {
+        return null;
+    }
+
+    @Override
+    public void addCarroUsuario(Carro carro) {
+
+    }
+
+    @Override
+    public Collection<Universidad> getUniversidad() {
+        return null;
+    }
+
+    @Override
+    public void addUniversidad(Universidad universidad) {
+
+    }
+
+    @Override
+    public void addCalificacion(String idConductor, String idPasajero, int calificacion) {
+
+    }
 }
