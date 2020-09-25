@@ -75,7 +75,7 @@ public class UniWheelsController {
     @RequestMapping(value="/addCalificacion/{idConductor}/{idPasajero}/{calificacion}", method=RequestMethod.POST)
     public ResponseEntity<?> addUniversidad(@PathVariable String idConductor,@PathVariable String idPasajero,@PathVariable int calificacion){
         try{
-            uws.addCalificacion(universidad);
+            uws.addCalificacion(idConductor,idPasajero,calificacion);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e){
             Logger.getLogger(UniWheelsAPIController.class.getName()).log(Level.SEVERE, null, e);
