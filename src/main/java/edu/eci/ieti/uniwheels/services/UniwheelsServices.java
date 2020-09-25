@@ -44,7 +44,7 @@ public class UniwheelsServices {
         uniwheelsPersistence.addCalificacion(idConductor,idPasajero,calificacion);
     }
 
-    public void updateCarro(Carro carro) {
+    public void updateCarro(Carro carro) throws Exception {
         uniwheelsPersistence.updateCarro(carro);
     }
 }

@@ -113,6 +113,5 @@ public class ImplPersistencia implements UniwheelsPersistence {
         }
         else
             throw new Exception(UniWheelsException.INVALID_CAR);
-
     }
 }
