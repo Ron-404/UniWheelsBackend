@@ -1,9 +1,15 @@
 package edu.eci.ieti.uniwheels.services;
 
 
+import edu.eci.ieti.uniwheels.model.Carro;
+import edu.eci.ieti.uniwheels.model.DetallesUsuario;
+import edu.eci.ieti.uniwheels.model.Universidad;
+import edu.eci.ieti.uniwheels.model.Usuario;
+import edu.eci.ieti.uniwheels.persistence.UniwheelsPersistence;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import java.util.Collection;
 
 
 @Service
@@ -21,7 +27,7 @@ public class UniwheelsServices {
         return uniwheelsPersistence.getCarros(username);
     }
 
-    public void addCarroUsuario(Usuario user,Carro carro){
+    public void addCarroUsuario(DetallesUsuario user, Carro carro){
         uniwheelsPersistence.addCarroUsuario(carro);
     }
 
@@ -34,7 +40,7 @@ public class UniwheelsServices {
     }
 
     public void addCalificacion(String idConductor,String idPasajero,int calificacion){
-        return uniwheelsPersistence.addCalificacion(idConductor,idPasajero,calificacion);
+        uniwheelsPersistence.addCalificacion(idConductor,idPasajero,calificacion);
     }
 
 }
