@@ -45,7 +45,7 @@ gradle spring-boot:run
 ### External APIs
 1. [Cars and model](https://the-vehicles-api.herokuapp.com/brands) -> This is used to feed the add car function information
 
-* Brands of cars
+* Brands of cars - [Endpoint](https://the-vehicles-api.herokuapp.com/brands/)
 
 ```
      [{"id":36,"brand":"Acura"},
@@ -54,7 +54,7 @@ gradle spring-boot:run
      {"id":400,"brand":"Artic Cat"},
      {"id":565,"brand":"Aston Martin"}]
 ```
-* Models of a Brand
+* Models of a Brand - [Endpoint](https://the-vehicles-api.herokuapp.com/models?brandId=17)
 ```
 [{"id":384,"model":"Serie 1",
      "brand":{"id":17,"brand":"BMW"},
