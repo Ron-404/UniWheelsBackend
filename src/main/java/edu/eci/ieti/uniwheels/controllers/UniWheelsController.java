@@ -33,7 +33,7 @@ public class UniWheelsController extends BaseController{
     @RequestMapping(value ="/getCarros",method = RequestMethod.GET)
     public ResponseEntity<?> getCarros(@PathVariable String username){
         try{
-            DetallesUsuario user = getLoggedUser();
+
             Collection<Carro> carrosCarroCollection = uniwheelsServices.getCarros(username);
             return new ResponseEntity<>(carrosCarroCollection, HttpStatus.ACCEPTED);
         }
@@ -45,10 +45,11 @@ public class UniWheelsController extends BaseController{
     }
 
 
-    @RequestMapping(value="/addCarro", method= RequestMethod.POST)
-    public ResponseEntity<?> addCarroUsuario(@RequestBody Carro carro){
+    @RequestMapping(value="/addCarro/{username}", method= RequestMethod.POST)
+    public ResponseEntity<?> addCarroUsuario(@RequestBody Carro carro,@PathVariable String username){
         try{
-            DetallesUsuario usuario = getLoggedUser();
+
+            Usuario usuario = getCurrentUser(uniwheelsServices.getUserByUsername(username));
             uniwheelsServices.addCarroUsuario(usuario,carro);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e){

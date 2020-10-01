@@ -12,10 +12,8 @@ import java.util.List;
 
 
 @Service
-public class UniwheelsServices {
+public class UniwheelsServices extends UserServices{
 
-    @Autowired
-    UniwheelsPersistence uniwheelsPersistence = null;
 
     public String helloWorld(){
 
@@ -26,7 +24,7 @@ public class UniwheelsServices {
         return uniwheelsPersistence.getCarros(username);
     }
 
-    public void addCarroUsuario(DetallesUsuario user, Carro carro) throws Exception {
+    public void addCarroUsuario(Usuario user, Carro carro) throws Exception {
         uniwheelsPersistence.addCarroUsuario(carro);
     }
 
