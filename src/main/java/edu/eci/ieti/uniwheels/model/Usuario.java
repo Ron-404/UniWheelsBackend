@@ -129,6 +129,17 @@ public class Usuario {
         this.universidad = universidad;
     }
 
+    public void changeValues(Usuario user){
+        this.viajesPasajero = user.viajesPasajero;
+        this.viajesConductor = user.viajesConductor;
+        this.carros = user.carros;
+        this.password = user.password;
+        this.direccionResidencia = user.direccionResidencia;
+        this.numero = user.numero;
+        this.email = user.email;
+        this.universidad = user.universidad;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +

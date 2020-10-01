@@ -24,4 +24,6 @@ public interface UniwheelsPersistence {
     void addCalificacion(String idConductor, String idPasajero, int calificacion) throws Exception;
 
     void updateCarro(Carro carro) throws Exception;
+
+    void updateUser(Usuario user) throws UniWheelsException;
 }

@@ -32,11 +32,12 @@ gradle spring-boot:run
     "viajesPasajero":[]
 }
 ```
-2. /login (Login)
+2. /auth/login (Login)
 ```
 {
     "username":"orlandoagk",
-    "password":"prueba"
+    "password":"prueba",
+    "token":""
 }
 ```
 
