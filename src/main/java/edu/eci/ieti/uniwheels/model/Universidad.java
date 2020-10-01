@@ -9,6 +9,8 @@ public class Universidad {
     private String id;
     private String nombre;
 
+    public Universidad() {}
+
     public Universidad(String nombre) {
         this.nombre = nombre;
     }

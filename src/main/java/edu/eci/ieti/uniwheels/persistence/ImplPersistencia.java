@@ -3,14 +3,13 @@ package edu.eci.ieti.uniwheels.persistence;
 import edu.eci.ieti.uniwheels.model.Carro;
 import edu.eci.ieti.uniwheels.model.Universidad;
 import edu.eci.ieti.uniwheels.model.Usuario;
-import edu.eci.ieti.uniwheels.repository.CarroRepository;
+import edu.eci.ieti.uniwheels.repository.UniversityRepository;
 import edu.eci.ieti.uniwheels.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ImplPersistencia implements UniwheelsPersistence {
@@ -22,7 +21,7 @@ public class ImplPersistencia implements UniwheelsPersistence {
     private UserRepository userRepository;
 
     @Autowired
-    private CarroRepository carroRepository;
+    private UniversityRepository universityRepository;
 
     @Override
     public void saveUser(Usuario usuario){
@@ -55,17 +54,19 @@ public class ImplPersistencia implements UniwheelsPersistence {
     public List<Carro> getCarros(String username) throws Exception {
         if(username != null)
         {
-            //Connect with repository
+            Usuario user = getUserByUsername(username);
+            List<Carro> allCars = user.getCarros();
+            return allCars;
         }
         else
             throw new Exception(UniWheelsException.USERNAME_NOT_FOUND);
-        return null;
     }
 
     @Override
-    public void addCarroUsuario(Carro carro) throws Exception {
+    public void addCarroUsuario(Usuario usuario,Carro carro) throws Exception {
         if(carro != null){
-            //Connect with repository
+            usuario.addCarros(carro);
+            userRepository.save(usuario);
         }
         else
             throw new Exception(UniWheelsException.CAR_NOT_FOUND);
@@ -74,13 +75,14 @@ public class ImplPersistencia implements UniwheelsPersistence {
 
     @Override
     public List<Universidad> getUniversidad() {
-        return null;
+        List<Universidad> allUniversitys = universityRepository.findAll();
+        return allUniversitys;
     }
 
     @Override
     public void addUniversidad(Universidad universidad) throws Exception {
         if(universidad != null){
-            //Connect with repository
+            universityRepository.save(universidad);
         }
         else
             throw new Exception(UniWheelsException.INVALID_UNIVERSITY);

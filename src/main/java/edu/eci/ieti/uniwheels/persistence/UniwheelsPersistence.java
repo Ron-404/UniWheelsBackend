@@ -15,7 +15,7 @@ public interface UniwheelsPersistence {
 
     List<Carro> getCarros(String username) throws Exception;
 
-    void addCarroUsuario(Carro carro) throws Exception;
+    void addCarroUsuario(Usuario User,Carro carro) throws Exception;
 
     List<Universidad> getUniversidad();
 

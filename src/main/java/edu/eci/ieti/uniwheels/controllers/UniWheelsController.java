@@ -30,7 +30,7 @@ public class UniWheelsController extends BaseController{
         return uniwheelsServices.helloWorld();
     }
 
-    @RequestMapping(value ="/getCarros",method = RequestMethod.GET)
+    @RequestMapping(value ="/getCarros/{username}",method = RequestMethod.GET)
     public ResponseEntity<?> getCarros(@PathVariable String username){
         try{
 
@@ -85,6 +85,7 @@ public class UniWheelsController extends BaseController{
     @RequestMapping(value="/addUniversidad", method=RequestMethod.POST)
     public ResponseEntity<?> addUniversidad(@RequestBody Universidad universidad){
         try{
+            System.out.println("w");
             uniwheelsServices.addUniversidad(universidad);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e){
