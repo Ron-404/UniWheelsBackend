@@ -5,6 +5,7 @@ import edu.eci.ieti.uniwheels.model.Carro;
 import edu.eci.ieti.uniwheels.model.DetallesUsuario;
 import edu.eci.ieti.uniwheels.model.Universidad;
 import edu.eci.ieti.uniwheels.model.Usuario;
+import edu.eci.ieti.uniwheels.persistence.UniWheelsException;
 import edu.eci.ieti.uniwheels.services.UniwheelsServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -99,6 +100,36 @@ public class UniWheelsController extends BaseController{
         } catch (Exception e){
             Logger.getLogger(UniWheelsController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @RequestMapping(value="/getUserState/{username}",method = RequestMethod.GET)
+    public ResponseEntity<?> getUserState(@PathVariable String username){
+        try {
+            String state = uniwheelsServices.getUserState(username);
+            return new ResponseEntity<>(state,HttpStatus.OK);
+        } catch (UniWheelsException e) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @RequestMapping(value="/getAverage/{username}/{type}",method=RequestMethod.GET)
+    public ResponseEntity<?> getAverage(@PathVariable String username,@PathVariable String type){
+        try {
+            float average = uniwheelsServices.getAverage(username,type);
+            return new ResponseEntity<>(average,HttpStatus.OK);
+        } catch (UniWheelsException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value="/updateUser",method=RequestMethod.PUT)
+    public ResponseEntity<?> getAverage(@RequestBody Usuario usuario){
+        try {
+            uniwheelsServices.updateUser(usuario);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (UniWheelsException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

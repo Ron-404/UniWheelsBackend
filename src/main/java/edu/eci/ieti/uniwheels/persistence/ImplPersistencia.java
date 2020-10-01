@@ -114,4 +114,12 @@ public class ImplPersistencia implements UniwheelsPersistence {
         else
             throw new Exception(UniWheelsException.INVALID_CAR);
     }
+
+
+    @Override
+    public void updateUser(Usuario user) throws UniWheelsException {
+        Usuario oldUser = getUserByUsername(user.username);
+        oldUser.changeValues(user);
+        userRepository.save(oldUser);
+    }
 }

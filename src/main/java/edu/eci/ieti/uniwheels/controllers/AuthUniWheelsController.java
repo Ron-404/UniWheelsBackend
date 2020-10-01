@@ -18,7 +18,7 @@ public class AuthUniWheelsController extends BaseController {
 
     @RequestMapping(value = "/loggedUser",method = RequestMethod.GET)
     public ResponseEntity<?> isLogged(){
-        return new ResponseEntity<>(getLoggedUser(),HttpStatus.OK);
+        return new ResponseEntity<>(getLoggedUser().usuario,HttpStatus.OK);
     }
 
     @RequestMapping(value = "/addUser",method = RequestMethod.POST)
