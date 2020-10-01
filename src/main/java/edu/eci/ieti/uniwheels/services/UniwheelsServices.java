@@ -18,7 +18,6 @@ public class UniwheelsServices extends UserServices{
     UniwheelsPersistence uniwheelsPersistence;
 
     public String helloWorld(){
-
         return "Hello World Hola Mundo";
     }
 
@@ -39,13 +38,11 @@ public class UniwheelsServices extends UserServices{
     }
 
     public void addCalificacion(String idConductor,String idPasajero,int calificacion) throws Exception {
-
         uniwheelsPersistence.addCalificacion(idConductor,idPasajero,calificacion);
     }
 
-    public void updateCarro(Carro carro) throws Exception {
-
-        uniwheelsPersistence.updateCarro(carro);
+    public void updateCarro(Carro carro,Usuario usuario) throws Exception {
+        uniwheelsPersistence.updateCarro(carro,usuario);
     }
 
     public String getUserState(String username) throws UniWheelsException {

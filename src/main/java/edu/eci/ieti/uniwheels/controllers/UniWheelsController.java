@@ -58,10 +58,11 @@ public class UniWheelsController extends BaseController{
         }
     }
 
-    @RequestMapping(value="/updateCarro/{carro}",method = RequestMethod.PUT)
-    public ResponseEntity<?> updateCarro(@PathVariable  Carro carro){
+    @RequestMapping(value="/updateCarro/{username}",method = RequestMethod.PUT)
+    public ResponseEntity<?> updateCarro(@RequestBody Carro carro,@PathVariable String username){
         try{
-            uniwheelsServices.updateCarro(carro);
+            Usuario usuario = getCurrentUser(uniwheelsServices.getUserByUsername(username));
+            uniwheelsServices.updateCarro(carro,usuario);
             return new ResponseEntity<>(HttpStatus.OK);
         }catch (Exception e){
             Logger.getLogger(UniWheelsController.class.getName()).log(Level.SEVERE, null, e);
