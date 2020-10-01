@@ -73,6 +73,10 @@ public class Usuario {
         this.carros = carros;
     }
 
+    public void addCarros(Carro carro) {
+        this.carros.add(carro);
+    }
+
     public String getNumero() {
         return numero;
     }

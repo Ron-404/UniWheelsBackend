@@ -14,6 +14,8 @@ import java.util.List;
 @Service
 public class UniwheelsServices extends UserServices{
 
+    @Autowired
+    UniwheelsPersistence uniwheelsPersistence;
 
     public String helloWorld(){
 
@@ -25,7 +27,7 @@ public class UniwheelsServices extends UserServices{
     }
 
     public void addCarroUsuario(Usuario user, Carro carro) throws Exception {
-        uniwheelsPersistence.addCarroUsuario(carro);
+        uniwheelsPersistence.addCarroUsuario(user,carro);
     }
 
     public List<Universidad> getUniversidades(){
