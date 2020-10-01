@@ -50,25 +50,6 @@ public class ImplPersistencia implements UniwheelsPersistence {
     }
 
     @Override
-    public List<Carro> getCarros(String username) throws Exception {
-        if(username != null) {
-            Usuario user = getUserByUsername(username);
-            List<Carro> allCars = user.getCarros();
-            return allCars;
-        } else
-            throw new Exception(UniWheelsException.USERNAME_NOT_FOUND);
-    }
-
-    @Override
-    public void addCarroUsuario(Usuario usuario,Carro carro) throws Exception {
-        if(carro != null){
-            usuario.addCarros(carro);
-            userRepository.save(usuario);
-        } else
-            throw new Exception(UniWheelsException.CAR_NOT_FOUND);
-    }
-
-    @Override
     public List<Universidad> getUniversidad() {
         List<Universidad> allUniversitys = universityRepository.findAll();
         return allUniversitys;
