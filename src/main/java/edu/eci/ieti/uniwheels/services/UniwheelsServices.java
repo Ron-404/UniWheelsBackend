@@ -7,7 +7,6 @@ import edu.eci.ieti.uniwheels.persistence.UniwheelsPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 
 
@@ -22,11 +21,13 @@ public class UniwheelsServices extends UserServices{
     }
 
     public List<Carro> getCarros(String username) throws Exception {
-        return uniwheelsPersistence.getCarros(username);
+        return uniwheelsPersistence.getUserByUsername(username).getCarros();
     }
 
-    public void addCarroUsuario(Usuario user, Carro carro) throws Exception {
-        uniwheelsPersistence.addCarroUsuario(user,carro);
+    public void addCarroUsuario(String user, Carro carro) throws Exception {
+        Usuario usuario = uniwheelsPersistence.getUserByUsername(user);
+        usuario.addCarros(carro);
+        updateUser(usuario);
     }
 
     public List<Universidad> getUniversidades(){
