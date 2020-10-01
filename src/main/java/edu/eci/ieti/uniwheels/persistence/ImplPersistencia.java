@@ -46,19 +46,16 @@ public class ImplPersistencia implements UniwheelsPersistence {
         if(usuario == null){
             throw new UniWheelsException(UniWheelsException.USERNAME_NOT_FOUND);
         }
-
         return usuario;
     }
 
     @Override
     public List<Carro> getCarros(String username) throws Exception {
-        if(username != null)
-        {
+        if(username != null) {
             Usuario user = getUserByUsername(username);
             List<Carro> allCars = user.getCarros();
             return allCars;
-        }
-        else
+        } else
             throw new Exception(UniWheelsException.USERNAME_NOT_FOUND);
     }
 
@@ -67,10 +64,8 @@ public class ImplPersistencia implements UniwheelsPersistence {
         if(carro != null){
             usuario.addCarros(carro);
             userRepository.save(usuario);
-        }
-        else
+        } else
             throw new Exception(UniWheelsException.CAR_NOT_FOUND);
-
     }
 
     @Override
@@ -83,40 +78,40 @@ public class ImplPersistencia implements UniwheelsPersistence {
     public void addUniversidad(Universidad universidad) throws Exception {
         if(universidad != null){
             universityRepository.save(universidad);
-        }
-        else
+        } else
             throw new Exception(UniWheelsException.INVALID_UNIVERSITY);
     }
 
     @Override
     public void addCalificacion(String idConductor, String idPasajero, int calificacion) throws Exception {
-        if(calificacion > 0)
-        {
-            if(idPasajero != null)
-            {
+        if(calificacion > 0) {
+            if(idPasajero != null) {
                 if(idConductor != null){
                     //Connect with repository
-                }
-                else
+                } else
                     throw  new Exception(UniWheelsException.DRIVER_NOT_FOUND);
-            }
-            else
+            } else
                 throw new Exception(UniWheelsException.PASANGER_NOT_FOUND);
-        }
-        else
+        } else
             throw new Exception(UniWheelsException.INVALID_RATING);
     }
 
     @Override
-    public void updateCarro(Carro carro) throws Exception {
-        if(carro != null)
-        {
-            //Connect with repository
-        }
-        else
+    public void updateCarro(Carro carro, Usuario usuario) throws Exception {
+        if(carro != null) {
+           List<Carro> allCarros = usuario.getCarros();
+           for(Carro car: allCarros){
+               if(car.getPlaca().equals(carro.getPlaca())){
+                   car.setColor(carro.getColor());
+                   car.setMarca(carro.getMarca());
+                   car.setModelo(carro.getModelo());
+                   break;
+               }
+           }
+           userRepository.save(usuario);
+        } else
             throw new Exception(UniWheelsException.INVALID_CAR);
     }
-
 
     @Override
     public void updateUser(Usuario user) throws UniWheelsException {
