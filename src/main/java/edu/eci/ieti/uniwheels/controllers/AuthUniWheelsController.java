@@ -18,7 +18,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/auth")
 public class AuthUniWheelsController extends BaseController{
