@@ -36,8 +36,7 @@ public class UniWheelsController extends BaseController{
             Collection<Carro> carrosCarroCollection = uniwheelsServices.getCarros(username);
             return new ResponseEntity<>(carrosCarroCollection, HttpStatus.ACCEPTED);
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             Logger.getLogger(UniWheelsController.class.getName()).log(Level.SEVERE,null,e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

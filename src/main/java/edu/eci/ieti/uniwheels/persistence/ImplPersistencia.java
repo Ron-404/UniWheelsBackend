@@ -59,8 +59,9 @@ public class ImplPersistencia implements UniwheelsPersistence {
     public void addUniversidad(Universidad universidad) throws Exception {
         if(universidad != null){
             universityRepository.save(universidad);
-        } else
+        } else {
             throw new Exception(UniWheelsException.INVALID_UNIVERSITY);
+        }
     }
 
     @Override
@@ -69,12 +70,15 @@ public class ImplPersistencia implements UniwheelsPersistence {
             if(idPasajero != null) {
                 if(idConductor != null){
                     //Connect with repository
-                } else
-                    throw  new Exception(UniWheelsException.DRIVER_NOT_FOUND);
-            } else
+                } else {
+                    throw new Exception(UniWheelsException.DRIVER_NOT_FOUND);
+                }
+            } else {
                 throw new Exception(UniWheelsException.PASANGER_NOT_FOUND);
-        } else
+            }
+        } else {
             throw new Exception(UniWheelsException.INVALID_RATING);
+        }
     }
 
     @Override
@@ -90,8 +94,9 @@ public class ImplPersistencia implements UniwheelsPersistence {
                }
            }
            userRepository.save(usuario);
-        } else
+        } else {
             throw new Exception(UniWheelsException.INVALID_CAR);
+        }
     }
 
     @Override
