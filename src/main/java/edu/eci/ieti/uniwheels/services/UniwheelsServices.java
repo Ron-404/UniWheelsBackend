@@ -113,5 +113,24 @@ public class UniwheelsServices extends UserServices{
 
     }
 
+     public List<Conductor> getConductoresDisponibles(JSONObject jsonObject, String conducNombre) throws UniWheelsException {
+         Usuario usuario = getUserByUsername(conducNombre);
+         Conductor conductor = new Conductor();
 
+         conductor.setEstado("Disponible");
+         conductor.setPrecio(jsonObject.getString("precio"));
+         conductor.setDireccionInicio(jsonObject.getString("origen"));
+         conductor.setDireccionFin(jsonObject.getString("destino"));
+
+         List<Carro> carros = usuario.getCarros();
+         for (Carro c:carros){
+             if (c.getPlaca().equals(jsonObject.getString("carro"))){
+                 conductor.setCarro(c);
+                 break;
+             }
+         }
+         usuario.viajesConductor.add(conductor);
+         uniwheelsPersistence.updateUser(usuario);
+         return uniwheelsPersistence.getConductoresDisponibles();
+    }
 }

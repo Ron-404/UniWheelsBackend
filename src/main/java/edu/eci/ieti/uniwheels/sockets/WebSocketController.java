@@ -37,4 +37,16 @@ public class WebSocketController {
         }
 
     }
+
+    @MessageMapping("/ofrecerViaje.{conducNombre}")
+    public void ofrecerViaje(String ruta, @DestinationVariable String conducNombre ) throws UniWheelsException {
+        JSONObject infoConductor = new JSONObject(ruta);
+        try {
+            List<Conductor> conductoresDisponibles = uniwheelsServices.getConductoresDisponibles(infoConductor,conducNombre);
+            msgt.convertAndSend("/conductoresDisponibles",conductoresDisponibles);
+        } catch (UniWheelsException e) {
+            e.printStackTrace();
+            msgt.convertAndSend("/conductoresDisponibles","No se encontraron conductores disponibles");
+        }
+    }
 }
