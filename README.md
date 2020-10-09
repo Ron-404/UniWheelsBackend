@@ -17,7 +17,7 @@ gradle spring-boot:run
 ## API's
 
 ### Authentication
-1. /auth/addUser (Register)
+1. POST /auth/addUser (Register)
 ```
 {
     "username": "orlandoagk",
@@ -32,7 +32,7 @@ gradle spring-boot:run
     "viajesPasajero":[]
 }
 ```
-2. /auth/login (Login)
+2. POST /auth/login (Login)
 ```
 {
     "username":"orlandoagk",
@@ -46,7 +46,7 @@ gradle spring-boot:run
 ### External APIs
 1. [Cars and model](https://the-vehicles-api.herokuapp.com/brands) -> This is used to feed the add car function information
 
-* Brands of cars - [Endpoint](https://the-vehicles-api.herokuapp.com/brands/)
+* Brands of cars - GET [Endpoint](https://the-vehicles-api.herokuapp.com/brands/)
 
 ```
      [{"id":36,"brand":"Acura"},
@@ -55,7 +55,7 @@ gradle spring-boot:run
      {"id":400,"brand":"Artic Cat"},
      {"id":565,"brand":"Aston Martin"}]
 ```
-* Models of a Brand - [Endpoint](https://the-vehicles-api.herokuapp.com/models?brandId=17)
+* Models of a Brand - GET [Endpoint](https://the-vehicles-api.herokuapp.com/models?brandId=17)
 ```
 [{"id":384,"model":"Serie 1",
      "brand":{"id":17,"brand":"BMW"},
@@ -73,3 +73,15 @@ gradle spring-boot:run
      "brand":{"id":17,"brand":"BMW"},
      "type":{"id":1,"type":"Car"}}]
  ```
+ 
+## Sockets
+
+* `/stompendpoint/solicitudPasajero.{usernameConductor}` SEND y SUSCRIBE (Send para pasajero y Suscribe para el conductor)
+    - SEND (Enviar el siguiente JSON)
+    ```
+    {
+        "username":usernamePasajero
+        "direccion":direccionRecogida
+    }
+    ```
+    - SUSCRIBE (Recibe una arreglo de JSON con la info de los posibles pasajeros)
