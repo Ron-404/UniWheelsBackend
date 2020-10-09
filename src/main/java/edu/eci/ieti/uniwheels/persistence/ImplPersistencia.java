@@ -1,14 +1,13 @@
 package edu.eci.ieti.uniwheels.persistence;
 
-import edu.eci.ieti.uniwheels.model.Carro;
-import edu.eci.ieti.uniwheels.model.Universidad;
-import edu.eci.ieti.uniwheels.model.Usuario;
+import edu.eci.ieti.uniwheels.model.*;
 import edu.eci.ieti.uniwheels.repository.UniversityRepository;
 import edu.eci.ieti.uniwheels.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -104,5 +103,19 @@ public class ImplPersistencia implements UniwheelsPersistence {
         Usuario oldUser = getUserByUsername(user.username);
         oldUser.changeValues(user);
         userRepository.save(oldUser);
+    }
+
+    @Override
+    public List<Conductor> getConductoresDisponibles(){
+        List<Usuario> usuarios= userRepository.findAll();
+        List<Conductor> conductorsTemp = new ArrayList<Conductor>();
+        for(Usuario user:usuarios){
+            for(Conductor con: user.getViajesConductor()){
+                if(con.getEstado().equals("Disponible")){
+                    conductorsTemp.add(con);
+                }
+            }
+        }
+        return conductorsTemp;
     }
 }
