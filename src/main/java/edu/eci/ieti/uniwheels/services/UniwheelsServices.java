@@ -4,9 +4,11 @@ package edu.eci.ieti.uniwheels.services;
 import edu.eci.ieti.uniwheels.model.*;
 import edu.eci.ieti.uniwheels.persistence.UniWheelsException;
 import edu.eci.ieti.uniwheels.persistence.UniwheelsPersistence;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -50,9 +52,9 @@ public class UniwheelsServices extends UserServices{
         Usuario user = uniwheelsPersistence.getUserByUsername(username);
         String state = "Ninguno";
         if(user.viajesPasajero.size()>0||user.viajesConductor.size()>0){
-            if (!user.viajesPasajero.get(user.viajesPasajero.size() - 1).estado.equals("Finished")) {
+            if (!user.viajesPasajero.get(user.viajesPasajero.size() - 1).estado.equals("Finalizado")) {
                 state = "Pasajero";
-            } else if (!user.viajesConductor.get(user.viajesConductor.size() - 1).estado.equals("Finished")){
+            } else if (!user.viajesConductor.get(user.viajesConductor.size() - 1).estado.equals("Finalizado")){
                 state = "Conductor";
             }
         }
@@ -87,4 +89,29 @@ public class UniwheelsServices extends UserServices{
         uniwheelsPersistence.updateUser(user);
 
     }
+
+    public List<Pasajero> solicitudDeViajePasajero(JSONObject infoPasajero, String usernameConductor) throws UniWheelsException {
+        Usuario pasajero = getUserByUsername(infoPasajero.getString("username"));
+        Usuario conductor = getUserByUsername(usernameConductor);
+        Conductor viajeConductor = null;
+        for(int i =0;i<conductor.viajesConductor.size();i++){
+            if(conductor.viajesConductor.get(i).estado.equals("Disponible")){
+                viajeConductor = conductor.viajesConductor.get(i);
+                break;
+            }
+        }
+
+        Pasajero viajePasajero = new Pasajero();
+        viajePasajero.estado = "Disponible";
+        viajePasajero.username = pasajero.username;
+        viajePasajero.direccionRecogida = infoPasajero.getString("direccion");
+        viajeConductor.posiblesPasajeros.add(viajePasajero);
+        pasajero.viajesPasajero.add(viajePasajero);
+        uniwheelsPersistence.updateUser(pasajero);
+        uniwheelsPersistence.updateUser(conductor);
+        return viajeConductor.posiblesPasajeros;
+
+    }
+
+
 }
