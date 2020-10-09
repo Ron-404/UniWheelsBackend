@@ -133,4 +133,50 @@ public class UniwheelsServices extends UserServices{
          uniwheelsPersistence.updateUser(usuario);
          return uniwheelsPersistence.getConductoresDisponibles();
     }
+
+    public JSONObject aceptarORechazarPasajero(JSONObject info, String usernamePasajero) throws UniWheelsException {
+        Usuario usuarioPasajero = getUserByUsername(usernamePasajero);
+        Usuario usuarioConductor = getUserByUsername(info.getString("usuario"));
+        boolean estado = info.getBoolean("estado");
+        Pasajero pasajero = null;
+        for(Pasajero p: usuarioPasajero.viajesPasajero){
+            if(p.estado.equals("Disponible")){
+                pasajero = p;
+                break;
+            }
+        }
+        Conductor conductor = null;
+        for(Conductor c: usuarioConductor.viajesConductor){
+            if(c.estado.equals("Disponible")){
+                conductor = c;
+                for(int i = 0;i<c.posiblesPasajeros.size();i++){
+                    if(c.posiblesPasajeros.get(i).username.equals(pasajero.username)){
+                        c.posiblesPasajeros.remove(i);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        pasajero.conductor = conductor;
+        if(estado){
+            pasajero.estado = "Aceptado";
+            for(Conductor c: uniwheelsPersistence.getConductoresDisponibles()){
+                for(int i = 0;i<c.posiblesPasajeros.size();i++){
+                    if(c.posiblesPasajeros.get(i).username.equals(usernamePasajero)){
+                        c.posiblesPasajeros.remove(i);
+                        break;
+                    }
+                }
+            }
+        } else {
+            pasajero.estado = "Rechazado";
+        }
+        uniwheelsPersistence.updateUser(usuarioConductor);
+        uniwheelsPersistence.updateUser(usuarioPasajero);
+        JSONObject jsonADevolver = new JSONObject(conductor);
+        jsonADevolver.put("estado",pasajero.estado);
+        return jsonADevolver;
+
+    }
 }

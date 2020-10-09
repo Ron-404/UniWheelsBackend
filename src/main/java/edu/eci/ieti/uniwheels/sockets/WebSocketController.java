@@ -49,4 +49,17 @@ public class WebSocketController {
             msgt.convertAndSend("/conductoresDisponibles","No se encontraron conductores disponibles");
         }
     }
+
+    @MessageMapping("/aceptarORechazarPasajero.{usernamePasajero}")
+    public void aceptarORechazarPasajero(String estado,@DestinationVariable String usernamePasajero){
+        JSONObject estadoJSON = new JSONObject(estado);
+        try{
+            JSONObject json = uniwheelsServices.aceptarORechazarPasajero(estadoJSON,usernamePasajero);
+
+            msgt.convertAndSend("/aceptarORechazarPasajero.{usernamePasajero}",json.toMap());
+        } catch (Exception e){
+            msgt.convertAndSend("/aceptarORechazarPasajero.{usernamePasajero}","No se encontró un pasajero o conductor con el username dado");
+        }
+
+    }
 }
