@@ -28,6 +28,7 @@ public class AuthServices extends UserServices{
     }
 
 
+
     public boolean login(String username,String password) throws UniWheelsException {
         Usuario user = uniwheelsPersistence.getUserByUsername(username);
         return bCryptPasswordEncoder.matches(password,user.password);
