@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/uniwheels")
+@CrossOrigin(origins = "*")
 public class UniWheelsController extends BaseController{
     @Autowired
     UniwheelsServices uniwheelsServices = null;
