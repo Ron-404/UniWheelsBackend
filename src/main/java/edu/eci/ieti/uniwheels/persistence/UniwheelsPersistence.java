@@ -23,4 +23,6 @@ public interface UniwheelsPersistence {
     void updateUser(Usuario user) throws UniWheelsException;
 
     List<Conductor> getConductoresDisponibles();
+    
+    List<Usuario> getUsuariosPorViaje();
 }
