@@ -43,10 +43,10 @@ public class WebSocketController {
         JSONObject infoConductor = new JSONObject(ruta);
         try {
             List<Conductor> conductoresDisponibles = uniwheelsServices.getConductoresDisponibles(infoConductor,conducNombre);
-            msgt.convertAndSend("/conductoresDisponibles",conductoresDisponibles);
+            msgt.convertAndSend("/uniwheels",conductoresDisponibles);
         } catch (UniWheelsException e) {
             e.printStackTrace();
-            msgt.convertAndSend("/conductoresDisponibles","No se encontraron conductores disponibles");
+            msgt.convertAndSend("/uniwheels","No se encontraron conductores disponibles");
         }
     }
 
