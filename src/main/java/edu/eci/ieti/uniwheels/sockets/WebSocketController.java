@@ -38,7 +38,7 @@ public class WebSocketController {
 
     }
 
-    @MessageMapping("/ofrecerViaje.{conducNombre}")
+    @MessageMapping("/ofrecerViaje/{conducNombre}")
     public void ofrecerViaje(String ruta, @DestinationVariable String conducNombre ) throws UniWheelsException {
         JSONObject infoConductor = new JSONObject(ruta);
         try {
