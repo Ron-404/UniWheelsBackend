@@ -35,7 +35,6 @@ public class WebSocketController {
             e.printStackTrace();
             msgt.convertAndSend("/solicitudPasajero."+usernameConductor,"No encontré el usuario pasajero o el conductor");
         }
-
     }
 
     @MessageMapping("/ofrecerViaje/{conducNombre}")
