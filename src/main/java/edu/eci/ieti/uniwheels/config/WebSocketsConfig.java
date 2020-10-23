@@ -12,13 +12,13 @@ public class WebSocketsConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/uniwheels");
-        config.setApplicationDestinationPrefixes("/ws");
+        config.setApplicationDestinationPrefixes("/wss");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/stompendpoint").setAllowedOrigins("*").withSockJS();
-        registry.addEndpoint("/ws").setAllowedOrigins("*").withSockJS();
+        registry.addEndpoint("/wss").setAllowedOrigins("*").withSockJS();
 
     }
 

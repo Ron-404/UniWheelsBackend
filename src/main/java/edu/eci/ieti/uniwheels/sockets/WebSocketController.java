@@ -1,20 +1,17 @@
 package edu.eci.ieti.uniwheels.sockets;
 
+import edu.eci.ieti.uniwheels.model.Conductor;
+import edu.eci.ieti.uniwheels.model.Pasajero;
 import edu.eci.ieti.uniwheels.persistence.UniWheelsException;
 import edu.eci.ieti.uniwheels.services.UniwheelsServices;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.security.core.Authentication;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import edu.eci.ieti.uniwheels.model.*;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -46,10 +43,10 @@ public class WebSocketController {
         JSONObject infoConductor = new JSONObject(ruta);
         try {
             List<Conductor> conductoresDisponibles = uniwheelsServices.getConductoresDisponibles(infoConductor,conducNombre);
-            msgt.convertAndSend("/uniwheels",conductoresDisponibles);
+            msgt.convertAndSend("/uniwheels/conductores",conductoresDisponibles);
         } catch (UniWheelsException e) {
             e.printStackTrace();
-            msgt.convertAndSend("/uniwheels","No se encontraron conductores disponibles");
+            msgt.convertAndSend("/uniwheels/conductores","No se encontraron conductores disponibles");
         }
     }
 
