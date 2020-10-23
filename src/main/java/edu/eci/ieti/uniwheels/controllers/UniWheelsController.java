@@ -103,10 +103,10 @@ public class UniWheelsController extends BaseController{
         }
     }
 
-    @RequestMapping(value="/getUserState/{username}",method = RequestMethod.GET)
+    @RequestMapping(value="/userStatus/{username}",method = RequestMethod.GET)
     public ResponseEntity<?> getUserState(@PathVariable String username){
         try {
-            String state = uniwheelsServices.getUserState(username);
+            String state = uniwheelsServices.getUserStatus(username);
             return new ResponseEntity<>(state,HttpStatus.OK);
         } catch (UniWheelsException e) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
