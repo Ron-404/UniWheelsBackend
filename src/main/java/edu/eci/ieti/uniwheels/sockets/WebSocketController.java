@@ -10,12 +10,15 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import edu.eci.ieti.uniwheels.model.*;
+import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/ws")
 public class WebSocketController {
 
     @Autowired
