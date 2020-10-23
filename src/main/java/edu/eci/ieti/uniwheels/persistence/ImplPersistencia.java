@@ -32,16 +32,7 @@ public class ImplPersistencia implements UniwheelsPersistence {
 
     @Override
     public Usuario getUserByUsername(String username) throws UniWheelsException {
-        List<Usuario> allUsers = userRepository.findAll();
-        System.out.println(username);
-        Usuario usuario = null;
-        for(int i =0;i<allUsers.size();i++){
-            System.out.println(allUsers.get(i).toString());
-            if(allUsers.get(i).username.equals(username)){
-                System.out.println("Entre acá");
-                usuario = allUsers.get(i);
-            }
-        }
+        Usuario usuario = userRepository.findByUsername(username);
         if(usuario == null){
             throw new UniWheelsException(UniWheelsException.USERNAME_NOT_FOUND);
         }
