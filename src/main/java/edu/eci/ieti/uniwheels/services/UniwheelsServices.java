@@ -87,20 +87,23 @@ public class UniwheelsServices extends UserServices {
 	}
 
 	public void updateUserBasicInfo(Usuario user) throws UniWheelsException {
+		
+		Usuario oldUserWithBasicChanges = getUserByUsername(user.username);
+		
 		// if password is received, re-encrypt it and change it
 		if (user.password != null) {
 			String pwd = user.password;
 			String encrypt = bCryptPasswordEncoder.encode(pwd);
-			user.setPassword(encrypt);
-		}
-		;
-		Usuario oldUserWithBasicChanges = getUserByUsername(user.username);
+			oldUserWithBasicChanges.setPassword(encrypt);
+		};
+		
 		// send the old user but with the new basic information, if not, it will delete
 		// the trips, cars, etc !!!
 		oldUserWithBasicChanges.setNombreCompleto(user.nombreCompleto);
 		oldUserWithBasicChanges.setDireccionResidencia(user.direccionResidencia);
 		oldUserWithBasicChanges.setEmail(user.email);
 		oldUserWithBasicChanges.setNumero(user.numero);
+		
 		uniwheelsPersistence.updateUser(oldUserWithBasicChanges);
 	}
 
