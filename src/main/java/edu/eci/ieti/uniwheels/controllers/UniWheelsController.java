@@ -126,7 +126,7 @@ public class UniWheelsController extends BaseController{
     @RequestMapping(value="/updateUser",method=RequestMethod.PUT)
     public ResponseEntity<?> getAverage(@RequestBody Usuario usuario){
         try {
-            uniwheelsServices.updateUser(usuario);
+            uniwheelsServices.updateUserBasicInfo(usuario);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (UniWheelsException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
