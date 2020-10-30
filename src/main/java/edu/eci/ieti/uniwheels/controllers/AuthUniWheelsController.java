@@ -59,7 +59,7 @@ public class AuthUniWheelsController extends BaseController {
 		String secretKey = "uniwheelsAuth";
 		List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
 
-		String token = Jwts.builder().setId("softtekJWT").setSubject(username)
+		String token = Jwts.builder().setSubject(username)
 				.claim("authorities",
 						grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
 				.setIssuedAt(new Date(System.currentTimeMillis()))
