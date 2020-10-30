@@ -25,55 +25,55 @@ public class WebSocketController {
     @Autowired
     UniwheelsServices uniwheelsServices;
 
-    @MessageMapping("/solicitudPasajero.{usernameConductor}")
-    public void pasajeroSolicitudDeViaje(String infoPasajero, @DestinationVariable String usernameConductor){
-        JSONObject infoDelPasajero = new JSONObject(infoPasajero);
+    @MessageMapping("/passengerRequest.{usernameDriver}")
+    public void pasajeroSolicitudDeViaje(String infoPassenger, @DestinationVariable String usernameDriver){
+        JSONObject infoOfPassenger = new JSONObject(infoPassenger);
         try {
-            List<Pasajero> posiblesPasajeros= uniwheelsServices.solicitudDeViajePasajero(infoDelPasajero,usernameConductor);
-            msgt.convertAndSend("/solicitudPasajero."+usernameConductor,posiblesPasajeros);
+            List<Pasajero> possiblePassengers= uniwheelsServices.solicitudDeViajePasajero(infoOfPassenger,usernameDriver);
+            msgt.convertAndSend("/passengerRequest."+usernameDriver,possiblePassengers);
         } catch (UniWheelsException e) {
             e.printStackTrace();
-            msgt.convertAndSend("/solicitudPasajero."+usernameConductor,"No encontré el usuario pasajero o el conductor");
+            msgt.convertAndSend("/passengerRequest."+usernameDriver,"No encontré el usuario pasajero o el conductor");
         }
     }
 
-    @MessageMapping("/ofrecerViaje.{conducNombre}")
-    public void ofrecerViaje(String ruta, @DestinationVariable String conducNombre ) throws UniWheelsException {
-        JSONObject infoConductor = new JSONObject(ruta);
+    @MessageMapping("/offerTravel.{driverUsername}")
+    public void ofrecerViaje(String route, @DestinationVariable String driverUsername ) throws UniWheelsException {
+        JSONObject infoDriver = new JSONObject(route);
         boolean flag = true;
-        if(ruta == null){
-            msgt.convertAndSend("/conductores",uniwheelsServices.getConductoresDisponibles());
+        if(route == null){
+            msgt.convertAndSend("/drivers",uniwheelsServices.getConductoresDisponibles());
             flag = true;
         }
         try {
             if(flag) {
-                List<Conductor> conductoresDisponibles = uniwheelsServices.getConductoresDisponibles(infoConductor, conducNombre);
-                msgt.convertAndSend("/conductores", conductoresDisponibles);
+                List<Conductor> availableDrivers = uniwheelsServices.getConductoresDisponibles(infoDriver, driverUsername);
+                msgt.convertAndSend("/drivers", availableDrivers);
             }
         } catch (UniWheelsException e) {
             e.printStackTrace();
-            msgt.convertAndSend("/conductores","No se encontraron conductores disponibles");
+            msgt.convertAndSend("/drivers","No se encontraron conductores disponibles");
         }
     }
 
-    @MessageMapping("/aceptarORechazarPasajero.{usernamePasajero}")
-    public void aceptarORechazarPasajero(String estado,@DestinationVariable String usernamePasajero){
-        JSONObject estadoJSON = new JSONObject(estado);
+    @MessageMapping("/acceptOrRejectPassenger.{usernamePassenger}")
+    public void aceptarORechazarPasajero(String state,@DestinationVariable String usernamePassenger){
+        JSONObject estadoJSON = new JSONObject(state);
         try{
-            JSONObject json = uniwheelsServices.aceptarORechazarPasajero(estadoJSON,usernamePasajero);
+            JSONObject json = uniwheelsServices.aceptarORechazarPasajero(estadoJSON,usernamePassenger);
 
-            msgt.convertAndSend("/aceptarORechazarPasajero."+usernamePasajero,json.toMap());
+            msgt.convertAndSend("/acceptOrRejectPassenger."+usernamePassenger,json.toMap());
         } catch (Exception e){
-            msgt.convertAndSend("/aceptarORechazarPasajero."+usernamePasajero,"No se encontró un pasajero o conductor con el username dado");
+            msgt.convertAndSend("/acceptOrRejectPassenger."+usernamePassenger,"No se encontró un pasajero o conductor con el username dado");
         }
 
     }
 
-    @MessageMapping("/estadoPasajero.{usernamePasajero}")
-    public void estadoPasajero(Estado estado, @DestinationVariable String usernamePasajero){
+    @MessageMapping("/passengerState.{usernamePassenger}")
+    public void estadoPasajero(Estado state, @DestinationVariable String usernamePassenger){
         try {
 
-            msgt.convertAndSend("/estadoPasajero."+usernamePasajero,uniwheelsServices.estadoPasajero(estado,usernamePasajero));
+            msgt.convertAndSend("/passengerState."+usernamePassenger,uniwheelsServices.estadoPasajero(state,usernamePassenger));
         } catch (UniWheelsException e) {
             e.printStackTrace();
         }
