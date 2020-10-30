@@ -5,6 +5,7 @@ import edu.eci.ieti.uniwheels.persistence.UniWheelsException;
 import edu.eci.ieti.uniwheels.persistence.UniwheelsPersistence;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.aggregation.ConditionalOperators;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -54,9 +55,9 @@ public class UniwheelsServices extends UserServices {
 		Usuario user = uniwheelsPersistence.getUserByUsername(username);
 		String status = "Ninguno";
 		if (user.viajesPasajero.size() > 0 || user.viajesConductor.size() > 0) {
-			if (!user.viajesPasajero.get(user.viajesPasajero.size() - 1).estado.equals("Finalizado")) {
+			if (!user.viajesPasajero.get(user.viajesPasajero.size() - 1).estado.equals(Estado.Finalizado)) {
 				status = "Pasajero";
-			} else if (!user.viajesConductor.get(user.viajesConductor.size() - 1).estado.equals("Finalizado")) {
+			} else if (!user.viajesConductor.get(user.viajesConductor.size() - 1).estado.equals(Estado.Finalizado)) {
 				status = "Conductor";
 			}
 		}
@@ -69,14 +70,14 @@ public class UniwheelsServices extends UserServices {
 		int totalScore = 0;
 		if (type.equals("Conductor") && usuario.viajesConductor.size() > 0) {
 			for (Conductor c : usuario.viajesConductor) {
-				if (c.estado.equals("Finalizado")) {
+				if (c.estado.equals(Estado.Finalizado)) {
 					valueToReturn += c.calificacion.valor;
 					totalScore += 1;
 				}
 			}
 		} else {
 			for (Pasajero p : usuario.viajesPasajero) {
-				if (p.estado.equals("Finalizado")) {
+				if (p.estado.equals(Estado.Finalizado)) {
 					valueToReturn += p.calificacion.valor;
 					totalScore += 1;
 				}
@@ -113,14 +114,14 @@ public class UniwheelsServices extends UserServices {
 		Usuario conductor = getUserByUsername(usernameConductor);
 		Conductor viajeConductor = null;
 		for (int i = 0; i < conductor.viajesConductor.size(); i++) {
-			if (conductor.viajesConductor.get(i).estado.equals("Disponible")) {
+			if (conductor.viajesConductor.get(i).estado.equals(Estado.Disponible)) {
 				viajeConductor = conductor.viajesConductor.get(i);
 				break;
 			}
 		}
 
 		Pasajero viajePasajero = new Pasajero();
-		viajePasajero.estado = "Disponible";
+		viajePasajero.estado = Estado.Disponible;
 		viajePasajero.username = pasajero.username;
 		viajePasajero.direccionRecogida = infoPasajero.getString("direccion");
 		viajeConductor.posiblesPasajeros.add(viajePasajero);
@@ -131,6 +132,9 @@ public class UniwheelsServices extends UserServices {
 
 	}
 
+	public List<Conductor> getConductoresDisponibles(){
+		return uniwheelsPersistence.getConductoresDisponibles();
+	}
 	public List<Conductor> getConductoresDisponibles(JSONObject jsonObject, String conducNombre)
 			throws UniWheelsException {
 		Usuario usuario = getUserByUsername(conducNombre);
@@ -159,14 +163,14 @@ public class UniwheelsServices extends UserServices {
 		boolean estado = info.getBoolean("estado");
 		Pasajero pasajero = null;
 		for (Pasajero p : usuarioPasajero.viajesPasajero) {
-			if (p.estado.equals("Disponible")) {
+			if (p.estado.equals(Estado.Disponible)) {
 				pasajero = p;
 				break;
 			}
 		}
 		Conductor conductor = null;
 		for (Conductor c : usuarioConductor.viajesConductor) {
-			if (c.estado.equals("Disponible")) {
+			if (c.estado.equals(Estado.Disponible)) {
 				conductor = c;
 				for (int i = 0; i < c.posiblesPasajeros.size(); i++) {
 					if (c.posiblesPasajeros.get(i).username.equals(pasajero.username)) {
@@ -179,7 +183,7 @@ public class UniwheelsServices extends UserServices {
 		}
 		pasajero.conductor = conductor;
 		if (estado) {
-			pasajero.estado = "Aceptado";
+			pasajero.estado = Estado.Aceptado;
 			for (Conductor c : uniwheelsPersistence.getConductoresDisponibles()) {
 				for (int i = 0; i < c.posiblesPasajeros.size(); i++) {
 					if (c.posiblesPasajeros.get(i).username.equals(usernamePasajero)) {
@@ -189,7 +193,7 @@ public class UniwheelsServices extends UserServices {
 				}
 			}
 		} else {
-			pasajero.estado = "Rechazado";
+			pasajero.estado = Estado.Rechazado;
 		}
 		uniwheelsPersistence.updateUser(usuarioConductor);
 		uniwheelsPersistence.updateUser(usuarioPasajero);
@@ -197,5 +201,19 @@ public class UniwheelsServices extends UserServices {
 		jsonADevolver.put("estado", pasajero.estado);
 		return jsonADevolver;
 
+	}
+
+	public Pasajero estadoPasajero(Estado estado,String usernamePasajero) throws UniWheelsException {
+		Usuario usuarioPasajero = uniwheelsPersistence.getUserByUsername(usernamePasajero);
+		Pasajero pasajero = null;
+		for (Pasajero p : usuarioPasajero.viajesPasajero) {
+			if (p.estado.equals(Estado.Disponible)) {
+				pasajero = p;
+				break;
+			}
+		}
+		pasajero.setEstado(estado);
+		uniwheelsPersistence.updateUser(usuarioPasajero);
+		return pasajero;
 	}
 }
