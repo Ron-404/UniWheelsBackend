@@ -40,13 +40,13 @@ public class WebSocketController {
 
     @MessageMapping("/offerTravel.{driverUsername}")
     public void ofrecerViaje(Viaje travel, @DestinationVariable String driverUsername ) throws UniWheelsException {
-        boolean flag = true;
+        boolean hasRoute = true;
         if(travel.getPrecio() == null){
             msgt.convertAndSend("/uniwheels/drivers",uniwheelsServices.getConductoresDisponibles());
-            flag = false;
+            hasRoute = false;
         }
         try {
-            if(flag) {
+            if(hasRoute) {
                 List<Conductor> availableDrivers = uniwheelsServices.getConductoresDisponibles(travel, driverUsername);
                 msgt.convertAndSend("/uniwheels/drivers", availableDrivers);
             }
