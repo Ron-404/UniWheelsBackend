@@ -3,6 +3,7 @@ package edu.eci.ieti.uniwheels.sockets;
 import edu.eci.ieti.uniwheels.model.Conductor;
 import edu.eci.ieti.uniwheels.model.Estado;
 import edu.eci.ieti.uniwheels.model.Pasajero;
+import edu.eci.ieti.uniwheels.model.Viaje;
 import edu.eci.ieti.uniwheels.persistence.UniWheelsException;
 import edu.eci.ieti.uniwheels.services.UniwheelsServices;
 import org.json.JSONObject;
@@ -38,16 +39,15 @@ public class WebSocketController {
     }
 
     @MessageMapping("/offerTravel.{driverUsername}")
-    public void ofrecerViaje(String route, @DestinationVariable String driverUsername ) throws UniWheelsException {
-    	JSONObject infoDriver = new JSONObject(route);
+    public void ofrecerViaje(Viaje travel, @DestinationVariable String driverUsername ) throws UniWheelsException {
         boolean flag = true;
-        if(infoDriver.isNull("precio")){
+        if(travel.getPrecio() == null){
             msgt.convertAndSend("/uniwheels/drivers",uniwheelsServices.getConductoresDisponibles());
             flag = false;
         }
         try {
             if(flag) {
-                List<Conductor> availableDrivers = uniwheelsServices.getConductoresDisponibles(infoDriver, driverUsername);
+                List<Conductor> availableDrivers = uniwheelsServices.getConductoresDisponibles(travel, driverUsername);
                 msgt.convertAndSend("/uniwheels/drivers", availableDrivers);
             }
         } catch (UniWheelsException e) {

@@ -66,6 +66,17 @@ public class Usuario {
         return carros;
     }
 
+    public void setCarro(Carro car) {
+        for(Carro carTemp : getCarros()){
+            if(carTemp.getPlaca().equals(car.getPlaca())){
+                carTemp.setColor(car.getColor());
+                carTemp.setMarca(car.getMarca());
+                carTemp.setModelo(car.getModelo());
+                break;
+            }
+        }
+    }
+
     public void setCarros(List<Carro> carros) {
         this.carros = carros;
     }
