@@ -72,18 +72,10 @@ public class ImplPersistencia implements UniwheelsPersistence {
     }
 
     @Override
-    public void updateCarro(Carro carro, Usuario usuario) throws Exception {
-        if(carro != null) {
-           List<Carro> allCarros = usuario.getCarros();
-           for(Carro car: allCarros){
-               if(car.getPlaca().equals(carro.getPlaca())){
-                   car.setColor(carro.getColor());
-                   car.setMarca(carro.getMarca());
-                   car.setModelo(carro.getModelo());
-                   break;
-               }
-           }
-           userRepository.save(usuario);
+    public void updateCarro(Carro car, Usuario user) throws Exception {
+        if(car != null) {
+           user.setCarro(car);
+           userRepository.save(user);
         } else {
             throw new Exception(UniWheelsException.INVALID_CAR);
         }
@@ -103,7 +95,10 @@ public class ImplPersistencia implements UniwheelsPersistence {
         for(Usuario user:usuarios){
             for(Conductor con: user.getViajesConductor()){
                 if(con.getEstado().equals("Disponible")){
+                    con.setUsername(user.getUsername());
+                    con.setCarro(user.getCarros().get(0));
                     conductorsTemp.add(con);
+
                 }
             }
         }
