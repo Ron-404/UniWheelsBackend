@@ -2,18 +2,17 @@ package edu.eci.ieti.uniwheels;
 
 import static org.junit.Assert.*;
 
-import edu.eci.ieti.uniwheels.model.Carro;
-import edu.eci.ieti.uniwheels.model.Conductor;
-import edu.eci.ieti.uniwheels.model.Usuario;
-import edu.eci.ieti.uniwheels.model.Viaje;
+import edu.eci.ieti.uniwheels.model.*;
 import edu.eci.ieti.uniwheels.persistence.UniWheelsException;
 import edu.eci.ieti.uniwheels.repository.UserRepository;
 import edu.eci.ieti.uniwheels.services.AuthServices;
 import edu.eci.ieti.uniwheels.services.UniwheelsServices;
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -77,6 +76,32 @@ public class TestUniwheelsBackend {
         } catch (UniWheelsException e) {
             e.printStackTrace();
         }
-        assertEquals("The size of the list of driversAvailable sholud be 1",driversAvailable.size(),1);
+        assertEquals("The size of the list of driversAvailable should be 1",driversAvailable.size(),1);
+    }
+
+    @Test
+    public void thisWillReleaseAPassengerPetition(){
+        JSONObject jsonObject = new JSONObject();
+        Usuario user = new Usuario();
+        user.setUsername("otherNigi");
+        user.setNombreCompleto("Juancho Garcia");
+        user.setDireccionResidencia("Calle 96 #63-94");
+        user.setPassword("prueba");
+        user.setEmail("othernigi@mail.com");
+        user.setNumero("329485566");
+        user.setUniversidad("ECI");
+        user.setCarros(new ArrayList<>());
+        user.setViajesConductor(new ArrayList<>());
+        user.setViajesPasajero(new ArrayList<>());
+        authServices.addUser(user);
+        jsonObject.put("usuario","otherNigi");
+        jsonObject.put("direccion","Calle 34 #55b-93");
+        List<Pasajero> possiblePassengers = null;
+        /*try {
+            possiblePassengers = uniwheelsServices.solicitudDeViajePasajero(jsonObject,"nigi");
+        } catch (UniWheelsException e) {
+            e.printStackTrace();
+        }*/
+
     }
 }

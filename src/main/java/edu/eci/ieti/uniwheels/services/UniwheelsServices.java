@@ -110,7 +110,7 @@ public class UniwheelsServices extends UserServices {
 
 	public List<Pasajero> solicitudDeViajePasajero(JSONObject infoPasajero, String usernameConductor)
 			throws UniWheelsException {
-		Usuario pasajero = getUserByUsername(infoPasajero.getString("username"));
+		Usuario pasajero = getUserByUsername(infoPasajero.getString("usuario"));
 		Usuario conductor = getUserByUsername(usernameConductor);
 		Conductor viajeConductor = null;
 		for (int i = 0; i < conductor.viajesConductor.size(); i++) {
