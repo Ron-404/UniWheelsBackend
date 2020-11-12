@@ -113,6 +113,7 @@ public class UniWheelsController extends BaseController{
         }
     }
 
+
     @RequestMapping(value="/getAverage/{username}/{type}",method=RequestMethod.GET)
     public ResponseEntity<?> getAverage(@PathVariable String username,@PathVariable String type){
         try {
