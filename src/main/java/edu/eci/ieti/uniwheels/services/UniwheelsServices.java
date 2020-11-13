@@ -152,6 +152,11 @@ public class UniwheelsServices extends UserServices {
 				break;
 			}
 		}
+		for(Conductor drivers : usuario.getViajesConductor()){
+			if (drivers.getEstado().equals("Disponible")) {
+				throw new UniWheelsException(UniWheelsException.DRIVER_NOT_AVAILABLE);
+			}
+		}
 		usuario.viajesConductor.add(conductor);
 		uniwheelsPersistence.updateUser(usuario);
 		return uniwheelsPersistence.getConductoresDisponibles();
