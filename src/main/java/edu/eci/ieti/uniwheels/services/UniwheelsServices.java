@@ -43,7 +43,7 @@ public class UniwheelsServices extends UserServices {
 		uniwheelsPersistence.addUniversidad(universidad);
 	}
 
-	public void addCalificacion(String nameConductor, String namePasajero, double calificacion) throws Exception {
+	public void addCalificacion(String nameConductor, String namePasajero, double calificacion) throws UniWheelsException {
 		uniwheelsPersistence.addCalificacion(nameConductor, namePasajero, calificacion);
 	}
 
@@ -64,13 +64,15 @@ public class UniwheelsServices extends UserServices {
 		return status;
 	}
 
-	public float getAverage(String username, String type) throws UniWheelsException {
+	public double getAverage(String username, String type) throws UniWheelsException {
 		Usuario usuario = uniwheelsPersistence.getUserByUsername(username);
-		float valueToReturn = 0;
+		double valueToReturn = 0;
 		int totalScore = 0;
 		if (type.equals("Conductor") && usuario.viajesConductor.size() > 0) {
+			System.out.println("Entré acá");
 			for (Conductor c : usuario.viajesConductor) {
 				if (c.estado.equals(Estado.Finalizado)) {
+					System.out.println(c.calificacion);
 					valueToReturn += c.calificacion.valor;
 					totalScore += 1;
 				}
@@ -83,7 +85,9 @@ public class UniwheelsServices extends UserServices {
 				}
 			}
 		}
+		System.out.println(valueToReturn+" "+totalScore);
 		valueToReturn = valueToReturn / totalScore;
+
 		return valueToReturn;
 	}
 
@@ -113,17 +117,22 @@ public class UniwheelsServices extends UserServices {
 		Usuario pasajero = getUserByUsername(infoPasajero.getString("usuario"));
 		Usuario conductor = getUserByUsername(usernameConductor);
 		Conductor viajeConductor = null;
+
 		for (int i = 0; i < conductor.viajesConductor.size(); i++) {
 			if (conductor.viajesConductor.get(i).estado.equals(Estado.Disponible)) {
+
 				viajeConductor = conductor.viajesConductor.get(i);
 				break;
 			}
 		}
-
+		System.out.println(viajeConductor);
 		Pasajero viajePasajero = new Pasajero();
 		viajePasajero.estado = Estado.Disponible;
 		viajePasajero.username = pasajero.username;
 		viajePasajero.direccionRecogida = infoPasajero.getString("direccion");
+		if(viajeConductor.posiblesPasajeros == null){
+			viajeConductor.setPosiblesPasajeros(new ArrayList<>());
+		}
 		viajeConductor.posiblesPasajeros.add(viajePasajero);
 		pasajero.viajesPasajero.add(viajePasajero);
 		uniwheelsPersistence.updateUser(pasajero);
@@ -140,7 +149,7 @@ public class UniwheelsServices extends UserServices {
 		Usuario usuario = getUserByUsername(conducNombre);
 		Conductor conductor = new Conductor();
 
-		conductor.setEstado("Disponible");
+		conductor.setEstado(Estado.Disponible);
 		conductor.setPrecio(travel.getPrecio());
 		conductor.setDireccionInicio(travel.getOrigen());
 		conductor.setDireccionFin(travel.getDestino());
@@ -153,7 +162,7 @@ public class UniwheelsServices extends UserServices {
 			}
 		}
 		for(Conductor drivers : usuario.getViajesConductor()){
-			if (drivers.getEstado().equals("Disponible")) {
+			if (drivers.getEstado().equals(Estado.Disponible)) {
 				throw new UniWheelsException(UniWheelsException.DRIVER_NOT_AVAILABLE);
 			}
 		}
@@ -203,16 +212,30 @@ public class UniwheelsServices extends UserServices {
 		uniwheelsPersistence.updateUser(usuarioConductor);
 		uniwheelsPersistence.updateUser(usuarioPasajero);
 		JSONObject jsonADevolver = new JSONObject(conductor);
-		jsonADevolver.put("estado", pasajero.estado);
+		jsonADevolver.put("estadoPasajero", pasajero.estado);
 		return jsonADevolver;
 
+	}
+
+	public Conductor estadoConductor(Estado estado, String usernameConductor) throws UniWheelsException{
+		Usuario driverUser = uniwheelsPersistence.getUserByUsername(usernameConductor);
+		Conductor driver = null;
+		for(Conductor c: driverUser.viajesConductor){
+			if(c.estado.equals(Estado.Disponible)){
+				driver = c;
+				break;
+			}
+		}
+		driver.setEstado(estado);
+		uniwheelsPersistence.updateUser(driverUser);
+		return driver;
 	}
 
 	public Pasajero estadoPasajero(Estado estado,String usernamePasajero) throws UniWheelsException {
 		Usuario usuarioPasajero = uniwheelsPersistence.getUserByUsername(usernamePasajero);
 		Pasajero pasajero = null;
 		for (Pasajero p : usuarioPasajero.viajesPasajero) {
-			if (p.estado.equals(Estado.Disponible)) {
+			if (p.estado.equals(Estado.Disponible) || p.estado.equals(Estado.Aceptado)) {
 				pasajero = p;
 				break;
 			}
@@ -220,5 +243,13 @@ public class UniwheelsServices extends UserServices {
 		pasajero.setEstado(estado);
 		uniwheelsPersistence.updateUser(usuarioPasajero);
 		return pasajero;
+	}
+
+	public void finishTravel(String driverName, List<Pasajero> passengers) throws UniWheelsException {
+		estadoConductor(Estado.Finalizado,driverName);
+		for(Pasajero p: passengers){
+			estadoPasajero(Estado.Finalizado,p.username);
+		}
+
 	}
 }

@@ -7,9 +7,12 @@ import edu.eci.ieti.uniwheels.persistence.UniWheelsException;
 import edu.eci.ieti.uniwheels.repository.UserRepository;
 import edu.eci.ieti.uniwheels.services.AuthServices;
 import edu.eci.ieti.uniwheels.services.UniwheelsServices;
+import junit.framework.TestSuite;
 import org.json.JSONObject;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SpringBootTest(properties = {"spring.data.mongodb.uri=mongodb+srv://admin:adminwhells@uniwhellsback.vxj50.mongodb.net","spring.data.mongodb.database=UniWheelsTest"})
 public class TestUniwheelsBackend {
     @Autowired
@@ -30,8 +34,9 @@ public class TestUniwheelsBackend {
     @Autowired
     UserRepository userRepository;
 
+
     @Test
-    public void thisWillCreateAUser(){
+    public void athisWillCreateAUser(){
         userRepository.deleteAll();
         Usuario user = new Usuario();
         user.setUsername("nigi");
@@ -56,7 +61,7 @@ public class TestUniwheelsBackend {
     }
 
     @Test
-    public void thisWillAddACarToAUser(){
+    public void bthisWillAddACarToAUser(){
         try {
             uniwheelsServices.addCarroUsuario("nigi",new Carro("XYZ123", "Lamborghini", "Gris", "Urus"));
             List<Carro> cars = uniwheelsServices.getCarros("nigi");
@@ -68,7 +73,7 @@ public class TestUniwheelsBackend {
     }
 
     @Test
-    public void thisWillOfferATravel(){
+    public void cthisWillOfferATravel(){
         Viaje travel = new Viaje("3000", "ECI", "Mi Casa", "XYZ123");
         List<Conductor> driversAvailable = null;
         try {
@@ -80,11 +85,11 @@ public class TestUniwheelsBackend {
     }
 
     @Test
-    public void thisWillReleaseAPassengerPetition(){
+    public void dthisWillReleaseAPassengerPetition(){
         JSONObject jsonObject = new JSONObject();
         Usuario user = new Usuario();
         user.setUsername("otherNigi");
-        user.setNombreCompleto("Juancho Garcia");
+        user.setNombreCompleto("Juancho Benito");
         user.setDireccionResidencia("Calle 96 #63-94");
         user.setPassword("prueba");
         user.setEmail("othernigi@mail.com");
@@ -97,11 +102,35 @@ public class TestUniwheelsBackend {
         jsonObject.put("usuario","otherNigi");
         jsonObject.put("direccion","Calle 34 #55b-93");
         List<Pasajero> possiblePassengers = null;
-        /*try {
+        try {
             possiblePassengers = uniwheelsServices.solicitudDeViajePasajero(jsonObject,"nigi");
         } catch (UniWheelsException e) {
             e.printStackTrace();
-        }*/
+        }
+        assertEquals("The size of the list of possible passangers must be 1",possiblePassengers.size(),1);
+    }
 
+    @Test
+    public void ethisWillAcceptAPassengerPetition(){
+        JSONObject info = new JSONObject();
+        info.put("usuario","nigi");
+        info.put("estado",true);
+        try {
+            info = uniwheelsServices.aceptarORechazarPasajero(info,"otherNigi");
+        } catch (UniWheelsException e) {
+            e.printStackTrace();
+        }
+        assertEquals("The status will be \"Disponible\"",info.get("estadoPasajero"),Estado.Aceptado);
+    }
+
+    @Test
+    public void fthisWillPutAScoreToADriver(){
+        try {
+            uniwheelsServices.addCalificacion("nigi","-1",3.7);
+            uniwheelsServices.estadoConductor(Estado.Finalizado,"nigi");
+            assertEquals("The score of the driver must be 3.7",Double.toString(3.7),Double.toString(uniwheelsServices.getAverage("nigi","Conductor")));
+        } catch (UniWheelsException e) {
+            e.printStackTrace();
+        }
     }
 }
