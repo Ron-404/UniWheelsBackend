@@ -43,8 +43,8 @@ public class UniwheelsServices extends UserServices {
 		uniwheelsPersistence.addUniversidad(universidad);
 	}
 
-	public void addCalificacion(String idConductor, String idPasajero, int calificacion) throws Exception {
-		uniwheelsPersistence.addCalificacion(idConductor, idPasajero, calificacion);
+	public void addCalificacion(String nameConductor, String namePasajero, double calificacion) throws Exception {
+		uniwheelsPersistence.addCalificacion(nameConductor, namePasajero, calificacion);
 	}
 
 	public void updateCarro(Carro carro, Usuario usuario) throws Exception {
@@ -150,6 +150,11 @@ public class UniwheelsServices extends UserServices {
 			if (c.getPlaca().equals(travel.getCarro())) {
 				conductor.setCarro(c);
 				break;
+			}
+		}
+		for(Conductor drivers : usuario.getViajesConductor()){
+			if (drivers.getEstado().equals("Disponible")) {
+				throw new UniWheelsException(UniWheelsException.DRIVER_NOT_AVAILABLE);
 			}
 		}
 		usuario.viajesConductor.add(conductor);

@@ -52,7 +52,7 @@ public class WebSocketController {
             }
         } catch (UniWheelsException e) {
             e.printStackTrace();
-            msgt.convertAndSend("/uniwheels/drivers","No se encontraron conductores disponibles");
+            msgt.convertAndSend("/uniwheels/drivers",e.getMessage());
         }
     }
 
