@@ -132,7 +132,5 @@ public class TestUniwheelsBackend {
         } catch (UniWheelsException e) {
             e.printStackTrace();
         }
-
-
     }
 }

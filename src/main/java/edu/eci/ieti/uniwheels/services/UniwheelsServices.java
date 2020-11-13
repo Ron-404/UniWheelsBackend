@@ -244,4 +244,12 @@ public class UniwheelsServices extends UserServices {
 		uniwheelsPersistence.updateUser(usuarioPasajero);
 		return pasajero;
 	}
+
+	public void finishTravel(String driverName, List<Pasajero> passengers) throws UniWheelsException {
+		estadoConductor(Estado.Finalizado,driverName);
+		for(Pasajero p: passengers){
+			estadoPasajero(Estado.Finalizado,p.username);
+		}
+
+	}
 }

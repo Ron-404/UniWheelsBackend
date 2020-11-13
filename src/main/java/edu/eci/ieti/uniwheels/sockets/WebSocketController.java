@@ -72,9 +72,19 @@ public class WebSocketController {
     @MessageMapping("/passengerState.{usernamePassenger}")
     public void estadoPasajero(Estado state, @DestinationVariable String usernamePassenger){
         try {
-
             msgt.convertAndSend("/uniwheels/passengerState."+usernamePassenger,uniwheelsServices.estadoPasajero(state,usernamePassenger));
         } catch (UniWheelsException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @MessageMapping("/finishTravel.{useranameDriver}")
+    public void finishTravel(List<Pasajero> passengers,@DestinationVariable String usernameDriver){
+        try {
+            uniwheelsServices.finishTravel(usernameDriver,passengers);
+            msgt.convertAndSend("/finishTravel."+usernameDriver,"The travel is finished");
+        } catch (UniWheelsException e) {
+            msgt.convertAndSend("/finishTravel."+usernameDriver,"I got a error: "+e.getMessage());
             e.printStackTrace();
         }
     }
