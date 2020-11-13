@@ -56,13 +56,13 @@ public class ImplPersistencia implements UniwheelsPersistence {
     }
 
     @Override
-    public void addCalificacion(String nameConductor, String namePasajero, double calificacion) throws Exception {
+    public void addCalificacion(String nameConductor, String namePasajero, double calificacion) throws UniWheelsException {
         if(calificacion > 0) {
             if(namePasajero.equals("-1")) {
                 Usuario user = getUserByUsername(nameConductor);
                 Calificacion qualification = new Calificacion(calificacion);
                 for (Conductor driver : user.getViajesConductor()) {
-                    if (driver.getEstado().equals("Disponible")) {
+                    if (driver.getEstado().equals(Estado.Disponible)) {
                         driver.setCalificacion(qualification);
                         break;
                     }
@@ -72,17 +72,17 @@ public class ImplPersistencia implements UniwheelsPersistence {
                 Usuario user = getUserByUsername(namePasajero);
                 Calificacion qualification = new Calificacion(calificacion);
                 for (Pasajero pass : user.getViajesPasajero()) {
-                    if (pass.getEstado().equals("Disponible")) {
+                    if (pass.getEstado().equals(Estado.Disponible)) {
                         pass.setCalificacion(qualification);
                         break;
                     }
                 }
                 userRepository.save(user);
             } else {
-                throw new Exception(UniWheelsException.USERNAME_NOT_FOUND);
+                throw new UniWheelsException(UniWheelsException.USERNAME_NOT_FOUND);
             }
         } else {
-            throw new Exception(UniWheelsException.INVALID_RATING);
+            throw new UniWheelsException(UniWheelsException.INVALID_RATING);
         }
     }
 
@@ -109,11 +109,10 @@ public class ImplPersistencia implements UniwheelsPersistence {
         List<Conductor> conductorsTemp = new ArrayList<Conductor>();
         for(Usuario user:usuarios){
             for(Conductor con: user.getViajesConductor()){
-                if(con.getEstado().equals("Disponible")){
+                if(con.getEstado().equals(Estado.Disponible)){
                     con.setUsername(user.getUsername());
                     con.setCarro(user.getCarros().get(0));
                     conductorsTemp.add(con);
-
                 }
             }
         }

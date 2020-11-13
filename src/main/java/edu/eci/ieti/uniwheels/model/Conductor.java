@@ -9,17 +9,17 @@ public class Conductor {
 
     @Id
     public String id;
-    public String precio, direccionInicio, direccionFin, horaInicio, horaFin,estado,username;
+    public String precio, direccionInicio, direccionFin, horaInicio, horaFin,username;
     public Calificacion calificacion;
+    public Estado estado;
     public Carro carro;
     public List<Pasajero> posiblesPasajeros;
 
     public Conductor() {
-        this.posiblesPasajeros = new ArrayList<>();
     }
 
     public Conductor(String id, String precio, String direccionInicio, String direccionFin,
-                     String horaInicio, String horaFin, String estado, Calificacion calificacion, Carro carro, List<Pasajero> posiblesPasajeros) {
+                     String horaInicio, String horaFin, Estado estado, Calificacion calificacion, Carro carro, List<Pasajero> posiblesPasajeros) {
         this.id = id;
         this.precio = precio;
         this.direccionInicio = direccionInicio;
@@ -79,11 +79,11 @@ public class Conductor {
         this.horaFin = horaFin;
     }
 
-    public String getEstado() {
+    public Estado getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
@@ -117,5 +117,22 @@ public class Conductor {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return "Conductor{" +
+                "id='" + id + '\'' +
+                ", precio='" + precio + '\'' +
+                ", direccionInicio='" + direccionInicio + '\'' +
+                ", direccionFin='" + direccionFin + '\'' +
+                ", horaInicio='" + horaInicio + '\'' +
+                ", horaFin='" + horaFin + '\'' +
+                ", username='" + username + '\'' +
+                ", calificacion=" + calificacion +
+                ", estado=" + estado +
+                ", carro=" + carro +
+                ", posiblesPasajeros=" + posiblesPasajeros +
+                '}';
     }
 }

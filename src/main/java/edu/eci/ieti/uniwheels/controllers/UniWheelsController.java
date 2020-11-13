@@ -117,7 +117,7 @@ public class UniWheelsController extends BaseController{
     @RequestMapping(value="/getAverage/{username}/{type}",method=RequestMethod.GET)
     public ResponseEntity<?> getAverage(@PathVariable String username,@PathVariable String type){
         try {
-            float average = uniwheelsServices.getAverage(username,type);
+            double average = uniwheelsServices.getAverage(username,type);
             return new ResponseEntity<>(average,HttpStatus.OK);
         } catch (UniWheelsException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

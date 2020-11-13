@@ -27,7 +27,15 @@ public class Calificacion {
         return valor;
     }
 
-    public void setValor(float valor) {
+    public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    @Override
+    public String toString() {
+        return "Calificacion{" +
+                "id='" + id + '\'' +
+                ", valor=" + valor +
+                '}';
     }
 }
