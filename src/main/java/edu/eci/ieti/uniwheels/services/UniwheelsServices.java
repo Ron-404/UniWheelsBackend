@@ -43,8 +43,8 @@ public class UniwheelsServices extends UserServices {
 		uniwheelsPersistence.addUniversidad(universidad);
 	}
 
-	public void addCalificacion(String idConductor, String idPasajero, int calificacion) throws Exception {
-		uniwheelsPersistence.addCalificacion(idConductor, idPasajero, calificacion);
+	public void addCalificacion(String nameConductor, String namePasajero, double calificacion) throws Exception {
+		uniwheelsPersistence.addCalificacion(nameConductor, namePasajero, calificacion);
 	}
 
 	public void updateCarro(Carro carro, Usuario usuario) throws Exception {

@@ -1,5 +1,6 @@
 package edu.eci.ieti.uniwheels.persistence;
 
+import ch.qos.logback.classic.pattern.ClassNameOnlyAbbreviator;
 import edu.eci.ieti.uniwheels.model.*;
 import edu.eci.ieti.uniwheels.repository.UniversityRepository;
 import edu.eci.ieti.uniwheels.repository.UserRepository;
@@ -55,16 +56,30 @@ public class ImplPersistencia implements UniwheelsPersistence {
     }
 
     @Override
-    public void addCalificacion(String idConductor, String idPasajero, int calificacion) throws Exception {
+    public void addCalificacion(String nameConductor, String namePasajero, double calificacion) throws Exception {
         if(calificacion > 0) {
-            if(idPasajero != null) {
-                if(idConductor != null){
-                    //Connect with repository
-                } else {
-                    throw new Exception(UniWheelsException.DRIVER_NOT_FOUND);
+            if(namePasajero.equals("-1")) {
+                Usuario user = getUserByUsername(nameConductor);
+                Calificacion qualification = new Calificacion(calificacion);
+                for (Conductor driver : user.getViajesConductor()) {
+                    if (driver.getEstado().equals("Disponible")) {
+                        driver.setCalificacion(qualification);
+                        break;
+                    }
                 }
+                userRepository.save(user);
+            }else if(nameConductor.equals("-1")){
+                Usuario user = getUserByUsername(namePasajero);
+                Calificacion qualification = new Calificacion(calificacion);
+                for (Pasajero pass : user.getViajesPasajero()) {
+                    if (pass.getEstado().equals("Disponible")) {
+                        pass.setCalificacion(qualification);
+                        break;
+                    }
+                }
+                userRepository.save(user);
             } else {
-                throw new Exception(UniWheelsException.PASANGER_NOT_FOUND);
+                throw new Exception(UniWheelsException.USERNAME_NOT_FOUND);
             }
         } else {
             throw new Exception(UniWheelsException.INVALID_RATING);
