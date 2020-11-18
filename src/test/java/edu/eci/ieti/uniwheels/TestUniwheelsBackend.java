@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -74,8 +75,8 @@ public class TestUniwheelsBackend {
 
     @Test
     public void cthisWillOfferATravel(){
-    	ArrayList<String> inicio = new ArrayList<>( List.of("47.565656", "48.565656", "calle 127")); 
-        ArrayList<String> destino = new ArrayList<>( List.of("49.565656", "46.565656", "carrrear 24")); 
+    	ArrayList<String> inicio = new ArrayList<String>( Arrays.asList("47.565656", "48.565656", "calle 127")); 
+        ArrayList<String> destino = new ArrayList<String>( Arrays.asList("49.565656", "46.565656", "carrrear 24"));
         Viaje travel= new Viaje("3000", inicio, destino, "XYZ123");
         List<Conductor> driversAvailable = null;
         try {
