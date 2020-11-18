@@ -74,7 +74,9 @@ public class TestUniwheelsBackend {
 
     @Test
     public void cthisWillOfferATravel(){
-        Viaje travel = new Viaje("3000", "ECI", "Mi Casa", "XYZ123");
+    	ArrayList<String> inicio = new ArrayList<>( List.of("47.565656", "48.565656", "calle 127")); 
+        ArrayList<String> destino = new ArrayList<>( List.of("49.565656", "46.565656", "carrrear 24")); 
+        Viaje travel= new Viaje("3000", inicio, destino, "XYZ123");
         List<Conductor> driversAvailable = null;
         try {
             driversAvailable = uniwheelsServices.getConductoresDisponibles(travel,"nigi");

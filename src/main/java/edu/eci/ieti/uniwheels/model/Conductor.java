@@ -9,7 +9,8 @@ public class Conductor {
 
     @Id
     public String id;
-    public String precio, direccionInicio, direccionFin, horaInicio, horaFin,username;
+    public String precio, horaInicio, horaFin,username;
+    public ArrayList<String> direccionInicio, direccionFin;
     public Calificacion calificacion;
     public Estado estado;
     public Carro carro;
@@ -18,7 +19,7 @@ public class Conductor {
     public Conductor() {
     }
 
-    public Conductor(String id, String precio, String direccionInicio, String direccionFin,
+    public Conductor(String id, String precio, ArrayList<String> direccionInicio, ArrayList<String> direccionFin,
                      String horaInicio, String horaFin, Estado estado, Calificacion calificacion, Carro carro, List<Pasajero> posiblesPasajeros) {
         this.id = id;
         this.precio = precio;
@@ -47,19 +48,19 @@ public class Conductor {
         this.precio = precio;
     }
 
-    public String getDireccionInicio() {
+    public ArrayList<String> getDireccionInicio() {
         return direccionInicio;
     }
 
-    public void setDireccionInicio(String direccionInicio) {
+    public void setDireccionInicio(ArrayList<String> direccionInicio) {
         this.direccionInicio = direccionInicio;
     }
 
-    public String getDireccionFin() {
+    public ArrayList<String> getDireccionFin() {
         return direccionFin;
     }
 
-    public void setDireccionFin(String direccionFin) {
+    public void setDireccionFin(ArrayList<String> direccionFin) {
         this.direccionFin = direccionFin;
     }
 

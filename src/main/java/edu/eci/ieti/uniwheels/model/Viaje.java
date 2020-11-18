@@ -1,15 +1,17 @@
 package edu.eci.ieti.uniwheels.model;
 
+import java.util.ArrayList;
+
 public class Viaje {
     private String precio;
-    private String origen;
-    private String destino;
+    private ArrayList<String> origen;
+    private ArrayList<String> destino;
     private String carro;
 
     public Viaje(){
     }
 
-    public Viaje(String precio, String origen, String destino, String carro) {
+    public Viaje(String precio, ArrayList<String> origen, ArrayList<String> destino, String carro) {
         this.precio = precio;
         this.origen = origen;
         this.destino = destino;
@@ -24,19 +26,19 @@ public class Viaje {
         this.precio = precio;
     }
 
-    public String getOrigen() {
+    public ArrayList<String> getOrigen() {
         return origen;
     }
 
-    public void setOrigen(String origen) {
+    public void setOrigen(ArrayList<String> origen) {
         this.origen = origen;
     }
 
-    public String getDestino() {
+    public ArrayList<String> getDestino() {
         return destino;
     }
 
-    public void setDestino(String destino) {
+    public void setDestino(ArrayList<String> destino) {
         this.destino = destino;
     }
 
