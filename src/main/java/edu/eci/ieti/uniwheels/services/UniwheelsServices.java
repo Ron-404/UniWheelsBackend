@@ -69,15 +69,13 @@ public class UniwheelsServices extends UserServices {
 		double valueToReturn = 0;
 		int totalScore = 0;
 		if (type.equals("Conductor") && usuario.viajesConductor.size() > 0) {
-			System.out.println("Entré acá");
 			for (Conductor c : usuario.viajesConductor) {
 				if (c.estado.equals(Estado.Finalizado)) {
-					System.out.println(c.calificacion);
 					valueToReturn += c.calificacion.valor;
 					totalScore += 1;
 				}
 			}
-		} else {
+		} else if(type.equals("Pasajero") && usuario.viajesPasajero.size()>0) {
 			for (Pasajero p : usuario.viajesPasajero) {
 				if (p.estado.equals(Estado.Finalizado)) {
 					valueToReturn += p.calificacion.valor;
@@ -85,7 +83,6 @@ public class UniwheelsServices extends UserServices {
 				}
 			}
 		}
-		System.out.println(valueToReturn+" "+totalScore);
 		valueToReturn = valueToReturn / totalScore;
 
 		return valueToReturn;
@@ -125,7 +122,6 @@ public class UniwheelsServices extends UserServices {
 				break;
 			}
 		}
-		System.out.println(viajeConductor);
 		Pasajero viajePasajero = new Pasajero();
 		viajePasajero.estado = Estado.Disponible;
 		viajePasajero.username = pasajero.username;
@@ -251,5 +247,30 @@ public class UniwheelsServices extends UserServices {
 			estadoPasajero(Estado.Finalizado,p.username);
 		}
 
+	}
+
+	public Conductor getTravelDriver(String usernameDriver) throws UniWheelsException {
+		Usuario driverUser = uniwheelsPersistence.getUserByUsername(usernameDriver);
+		Conductor driver = null;
+		for (Conductor c: driverUser.getViajesConductor()){
+			if(c.getEstado().equals(Estado.Disponible)){
+				driver = c;
+				break;
+			}
+		}
+
+		return driver;
+	}
+
+	public Pasajero getTravelPassenger(String usernamePassenger) throws UniWheelsException {
+		Usuario passengerUser = uniwheelsPersistence.getUserByUsername(usernamePassenger);
+		Pasajero passenger = null;
+		for(Pasajero p:passengerUser.getViajesPasajero()){
+			if(p.getEstado().equals(Estado.Aceptado)){
+				passenger = p;
+				break;
+			}
+		}
+		return passenger;
 	}
 }

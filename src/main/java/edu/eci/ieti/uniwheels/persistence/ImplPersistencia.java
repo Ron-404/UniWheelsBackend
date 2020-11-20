@@ -1,6 +1,6 @@
 package edu.eci.ieti.uniwheels.persistence;
 
-import ch.qos.logback.classic.pattern.ClassNameOnlyAbbreviator;
+
 import edu.eci.ieti.uniwheels.model.*;
 import edu.eci.ieti.uniwheels.repository.UniversityRepository;
 import edu.eci.ieti.uniwheels.repository.UserRepository;
@@ -72,7 +72,7 @@ public class ImplPersistencia implements UniwheelsPersistence {
                 Usuario user = getUserByUsername(namePasajero);
                 Calificacion qualification = new Calificacion(calificacion);
                 for (Pasajero pass : user.getViajesPasajero()) {
-                    if (pass.getEstado().equals(Estado.Disponible)) {
+                    if (pass.getEstado().equals(Estado.Aceptado)) {
                         pass.setCalificacion(qualification);
                         break;
                     }

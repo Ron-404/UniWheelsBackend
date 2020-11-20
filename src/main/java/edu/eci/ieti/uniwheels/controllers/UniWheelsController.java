@@ -134,4 +134,23 @@ public class UniWheelsController extends BaseController{
         }
     }
 
+    @RequestMapping(value = "/travel/driver/{usernameDriver}",method = RequestMethod.GET)
+    public ResponseEntity<?> getTravelDriverByUsername(@PathVariable String usernameDriver){
+        try {
+            return new ResponseEntity<>(uniwheelsServices.getTravelDriver(usernameDriver),HttpStatus.OK);
+        } catch (UniWheelsException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/travel/passenger/{usernamePassenger}")
+    public ResponseEntity<?> getTravelPassengerByUsername(@PathVariable String usernamePassenger){
+        try {
+            return new ResponseEntity<>(uniwheelsServices.getTravelPassenger(usernamePassenger),HttpStatus.OK);
+        } catch (UniWheelsException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
 }
