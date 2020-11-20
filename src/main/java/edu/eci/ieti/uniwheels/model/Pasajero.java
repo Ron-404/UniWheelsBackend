@@ -69,4 +69,16 @@ public class Pasajero {
     public void setCalificacion(Calificacion calificacion) {
         this.calificacion = calificacion;
     }
+
+    @Override
+    public String toString() {
+        return "Pasajero{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", direccionRecogida='" + direccionRecogida + '\'' +
+                ", estado=" + estado +
+                ", conductor=" + conductor +
+                ", calificacion=" + calificacion +
+                '}';
+    }
 }

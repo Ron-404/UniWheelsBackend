@@ -130,8 +130,12 @@ public class TestUniwheelsBackend {
     public void fthisWillPutAScoreToADriverAndFinishATravel(){
         try {
             uniwheelsServices.addCalificacion("nigi","-1",3.7);
-            uniwheelsServices.estadoConductor(Estado.Finalizado,"nigi");
+            uniwheelsServices.addCalificacion("-1","otherNigi",4);
+            List<Pasajero> passengers = new ArrayList<>();
+            passengers.add(uniwheelsServices.getTravelPassenger("otherNigi"));
+            uniwheelsServices.finishTravel("nigi",passengers);
             assertEquals("The score of the driver must be 3.7",Double.toString(3.7),Double.toString(uniwheelsServices.getAverage("nigi","Conductor")));
+            assertEquals("The score of the passenger must be 4",Double.toString(4),Double.toString(uniwheelsServices.getAverage("otherNigi","Pasajero")));
         } catch (UniWheelsException e) {
             e.printStackTrace();
         }
