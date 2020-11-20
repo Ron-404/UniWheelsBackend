@@ -252,4 +252,18 @@ public class UniwheelsServices extends UserServices {
 		}
 
 	}
+
+	public Conductor getTravel(String usernameDriver) throws UniWheelsException {
+		Usuario driverUser = uniwheelsPersistence.getUserByUsername(usernameDriver);
+		Conductor driver = null;
+		for (Conductor c: driverUser.getViajesConductor()){
+			if(driver.getEstado().equals(Estado.Disponible)){
+				driver = c;
+				break;
+			}
+		}
+		return driver;
+
+
+	}
 }

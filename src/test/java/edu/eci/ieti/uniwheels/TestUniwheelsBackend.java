@@ -127,7 +127,7 @@ public class TestUniwheelsBackend {
     }
 
     @Test
-    public void fthisWillPutAScoreToADriver(){
+    public void fthisWillPutAScoreToADriverAndFinishATravel(){
         try {
             uniwheelsServices.addCalificacion("nigi","-1",3.7);
             uniwheelsServices.estadoConductor(Estado.Finalizado,"nigi");
