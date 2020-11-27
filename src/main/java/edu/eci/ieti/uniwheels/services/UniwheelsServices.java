@@ -167,10 +167,10 @@ public class UniwheelsServices extends UserServices {
 		return uniwheelsPersistence.getConductoresDisponibles();
 	}
 
-	public JSONObject aceptarORechazarPasajero(JSONObject info, String usernamePasajero) throws UniWheelsException {
+	public JSONObject aceptarORechazarPasajero(NuevoEstado info, String usernamePasajero) throws UniWheelsException {
 		Usuario usuarioPasajero = getUserByUsername(usernamePasajero);
-		Usuario usuarioConductor = getUserByUsername(info.getString("usuario"));
-		boolean estado = info.getBoolean("estado");
+		Usuario usuarioConductor = getUserByUsername(info.getConductorUsername());
+		boolean estado = info.getEstado();
 		Pasajero pasajero = null;
 		for (Pasajero p : usuarioPasajero.viajesPasajero) {
 			if (p.estado.equals(Estado.Disponible)) {

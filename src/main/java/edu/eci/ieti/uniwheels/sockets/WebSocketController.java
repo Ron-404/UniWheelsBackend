@@ -1,9 +1,6 @@
 package edu.eci.ieti.uniwheels.sockets;
 
-import edu.eci.ieti.uniwheels.model.Conductor;
-import edu.eci.ieti.uniwheels.model.Estado;
-import edu.eci.ieti.uniwheels.model.Pasajero;
-import edu.eci.ieti.uniwheels.model.Viaje;
+import edu.eci.ieti.uniwheels.model.*;
 import edu.eci.ieti.uniwheels.persistence.UniWheelsException;
 import edu.eci.ieti.uniwheels.services.UniwheelsServices;
 import org.json.JSONObject;
@@ -57,11 +54,9 @@ public class WebSocketController {
     }
 
     @MessageMapping("/acceptOrRejectPassenger.{usernamePassenger}")
-    public void aceptarORechazarPasajero(String state,@DestinationVariable String usernamePassenger){
-        JSONObject estadoJSON = new JSONObject(state);
+    public void aceptarORechazarPasajero(NuevoEstado state, @DestinationVariable String usernamePassenger){
         try{
-            JSONObject json = uniwheelsServices.aceptarORechazarPasajero(estadoJSON,usernamePassenger);
-
+            JSONObject json = uniwheelsServices.aceptarORechazarPasajero(state,usernamePassenger);
             msgt.convertAndSend("/uniwheels/acceptOrRejectPassenger."+usernamePassenger,json.toMap());
         } catch (Exception e){
             msgt.convertAndSend("/uniwheels/acceptOrRejectPassenger."+usernamePassenger,"No se encontró un pasajero o conductor con el username dado");
