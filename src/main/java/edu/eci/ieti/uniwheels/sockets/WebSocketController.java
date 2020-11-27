@@ -24,10 +24,9 @@ public class WebSocketController {
     UniwheelsServices uniwheelsServices;
 
     @MessageMapping("/passengerRequest.{usernameDriver}")
-    public void pasajeroSolicitudDeViaje(String infoPassenger, @DestinationVariable String usernameDriver){
-        JSONObject infoOfPassenger = new JSONObject(infoPassenger);
+    public void pasajeroSolicitudDeViaje(InformacionPasajero infoPassenger, @DestinationVariable String usernameDriver){
         try {
-            List<Pasajero> possiblePassengers= uniwheelsServices.solicitudDeViajePasajero(infoOfPassenger,usernameDriver);
+            List<Pasajero> possiblePassengers= uniwheelsServices.solicitudDeViajePasajero(infoPassenger,usernameDriver);
             msgt.convertAndSend("/uniwheels/passengerRequest."+usernameDriver,possiblePassengers);
         } catch (UniWheelsException e) {
             e.printStackTrace();

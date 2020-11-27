@@ -109,9 +109,9 @@ public class UniwheelsServices extends UserServices {
 		uniwheelsPersistence.updateUser(oldUserWithBasicChanges);
 	}
 
-	public List<Pasajero> solicitudDeViajePasajero(JSONObject infoPasajero, String usernameConductor)
+	public List<Pasajero> solicitudDeViajePasajero(InformacionPasajero infoPasajero, String usernameConductor)
 			throws UniWheelsException {
-		Usuario pasajero = getUserByUsername(infoPasajero.getString("usuario"));
+		Usuario pasajero = getUserByUsername(infoPasajero.getPasajeroUsername());
 		Usuario conductor = getUserByUsername(usernameConductor);
 		Conductor viajeConductor = null;
 
@@ -125,7 +125,7 @@ public class UniwheelsServices extends UserServices {
 		Pasajero viajePasajero = new Pasajero();
 		viajePasajero.estado = Estado.Disponible;
 		viajePasajero.username = pasajero.username;
-		viajePasajero.direccionRecogida = infoPasajero.getString("direccion");
+		viajePasajero.direccionRecogida = infoPasajero.getDireccion();
 		if(viajeConductor.posiblesPasajeros == null){
 			viajeConductor.setPosiblesPasajeros(new ArrayList<>());
 		}
