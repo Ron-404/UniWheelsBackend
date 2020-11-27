@@ -89,7 +89,7 @@ public class TestUniwheelsBackend {
 
     @Test
     public void dthisWillReleaseAPassengerPetition(){
-        JSONObject jsonObject = new JSONObject();
+        InformacionPasajero infoPassenger = new InformacionPasajero("otherNigi","Calle 34 #55b-95");
         Usuario user = new Usuario();
         user.setUsername("otherNigi");
         user.setNombreCompleto("Juancho Benito");
@@ -102,11 +102,9 @@ public class TestUniwheelsBackend {
         user.setViajesConductor(new ArrayList<>());
         user.setViajesPasajero(new ArrayList<>());
         authServices.addUser(user);
-        jsonObject.put("usuario","otherNigi");
-        jsonObject.put("direccion","Calle 34 #55b-93");
         List<Pasajero> possiblePassengers = null;
         try {
-            possiblePassengers = uniwheelsServices.solicitudDeViajePasajero(jsonObject,"nigi");
+            possiblePassengers = uniwheelsServices.solicitudDeViajePasajero(infoPassenger,"nigi");
         } catch (UniWheelsException e) {
             e.printStackTrace();
         }
@@ -115,11 +113,10 @@ public class TestUniwheelsBackend {
 
     @Test
     public void ethisWillAcceptAPassengerPetition(){
-        JSONObject info = new JSONObject();
-        info.put("usuario","nigi");
-        info.put("estado",true);
+        NuevoEstado newState = new NuevoEstado("nigi",true);
+        JSONObject info = null;
         try {
-            info = uniwheelsServices.aceptarORechazarPasajero(info,"otherNigi");
+            info = uniwheelsServices.aceptarORechazarPasajero(newState,"otherNigi");
         } catch (UniWheelsException e) {
             e.printStackTrace();
         }
