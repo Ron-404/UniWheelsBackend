@@ -107,6 +107,7 @@ public class UniWheelsController extends BaseController{
             String state = uniwheelsServices.getUserStatus(username);
             return new ResponseEntity<>(state,HttpStatus.OK);
         } catch (UniWheelsException e) {
+            Logger.getLogger(UniWheelsController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -118,6 +119,7 @@ public class UniWheelsController extends BaseController{
             double average = uniwheelsServices.getAverage(username,type);
             return new ResponseEntity<>(average,HttpStatus.OK);
         } catch (UniWheelsException e) {
+            Logger.getLogger(UniWheelsController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -128,6 +130,7 @@ public class UniWheelsController extends BaseController{
             uniwheelsServices.updateUserBasicInfo(usuario);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (UniWheelsException e) {
+            Logger.getLogger(UniWheelsController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -137,6 +140,7 @@ public class UniWheelsController extends BaseController{
         try {
             return new ResponseEntity<>(uniwheelsServices.getTravelDriver(usernameDriver),HttpStatus.OK);
         } catch (UniWheelsException e) {
+            Logger.getLogger(UniWheelsController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -146,6 +150,7 @@ public class UniWheelsController extends BaseController{
         try {
             return new ResponseEntity<>(uniwheelsServices.getTravelPassenger(usernamePassenger),HttpStatus.OK);
         } catch (UniWheelsException e) {
+            Logger.getLogger(UniWheelsController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
